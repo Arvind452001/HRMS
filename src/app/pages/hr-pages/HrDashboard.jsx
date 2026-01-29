@@ -3,7 +3,7 @@ import React from 'react'
 const HrDashboard = () => {
   return (
     <div>
-      <h1>HRDashboard</h1>
+      <h1>HR-Dashboard</h1>
     </div>
   )
 }

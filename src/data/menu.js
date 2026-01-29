@@ -1,71 +1,37 @@
 import {
-  FiHome,
-  FiBriefcase,
-  FiClipboard,
-  FiClock,
-  FiDollarSign,
-  FiCalendar,
-} from "react-icons/fi"
-
+  LayoutGrid,
+  User,
+  CalendarCheck,
+  Calendar,
+  Wallet,
+  Briefcase,
+  Target,
+  Users,
+  BarChart2,
+  ShieldCheck,
+  Settings,
+} from "lucide-react";
 
 export const menu = {
   hr: [
-    {
-      label: "Dashboard",
-      path: "/hr/dashboard",
-      icon: FiHome,
-      color: "from-blue-500 to-indigo-500",
-    },
-    {
-      label: "Jobs",
-      path: "/hr/jobs",
-      icon: FiBriefcase,
-      color: "from-purple-500 to-pink-500",
-    },
-    {
-      label: "ATS",
-      path: "/hr/ats",
-      icon: FiClipboard,
-      color: "from-emerald-500 to-teal-500",
-    },
-    {
-      label: "Attendance",
-      path: "/hr/attendance",
-      icon: FiClock,
-      color: "from-orange-500 to-amber-500",
-    },
-    {
-      label: "Payroll",
-      path: "/hr/payroll",
-      icon: FiDollarSign,
-      color: "from-rose-500 to-red-500",
-    },
+    { name: "Dashboard", icon: LayoutGrid, path: "" }, // index route
+    { name: "Employees", icon: Users, path: "employees" },
+    { name: "Job Post", icon: Briefcase, path: "job-post" },
+    { name: "ATS", icon: Target, path: "ats" },
+    { name: "Payroll", icon: Wallet, path: "payroll" },
+    { name: "Attendance Management", icon: CalendarCheck, path: "attendance" },
+    { name: "Performance Management", icon: BarChart2, path: "performance" },
+    { name: "Leave Management", icon: Calendar, path: "leave" },
+    { name: "Company Policy", icon: ShieldCheck, path: "company-policy" },
+    { name: "Setting", icon: Settings, path: "settings" },
   ],
 
   employee: [
-    {
-      label: "Dashboard",
-      path: "/employee/dashboard",
-      icon: FiHome,
-      color: "from-blue-500 to-indigo-500",
-    },
-    {
-      label: "Attendance",
-      path: "/employee/attendance",
-      icon: FiClock,
-      color: "from-emerald-500 to-teal-500",
-    },
-    {
-      label: "Leave",
-      path: "/employee/leave",
-      icon: FiCalendar,
-      color: "from-purple-500 to-pink-500",
-    },
-    {
-      label: "Payslip",
-      path: "/employee/payslip",
-      icon: FiDollarSign,
-      color: "from-orange-500 to-amber-500",
-    },
+    { name: "Dashboard", icon: LayoutGrid, path: "" }, // index route
+    { name: "My Profile", icon: User, path: "myProfile" },
+    { name: "Attendance", icon: CalendarCheck, path: "attendance" },
+    { name: "Leave Management", icon: Calendar, path: "leaveManagement" },
+    { name: "Payroll & Salary", icon: Wallet, path: "payroll-salary" }, // avoid & in URL
+    { name: "Company Policies", icon: Briefcase, path: "companyPolicies" },
   ],
-}
+};

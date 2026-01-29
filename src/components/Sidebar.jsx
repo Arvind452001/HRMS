@@ -1,39 +1,62 @@
-import React from "react";
-import { menu } from "../data/menu";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logo.jpg";
+import { Headphones, LogOut } from "lucide-react";
+import { menu } from "../data/menu";
 
-const Sidebar = ({ role}) => {
+export default function Sidebar({ role }) {
   return (
-    <aside className="w-64 min-h-screen bg-blue-300 border-r px-4 py-6">
+    <div className="h-screen w-68 bg-white border-r flex flex-col justify-between px-4 py-1">
       {/* Logo */}
-      <h1 className="text-2xl font-bold text-indigo-600 mb-8">TECHNORIZEN</h1>
+      <div>
+        <div className="mb-4 px-2">
+          <img src={logo} alt="Technorizen" className="h-24 w-full" />
+        </div>
 
-      {/* Menu */}
-      <nav className="space-y-2">
-        {menu[role].map((item) => {
-          const Icon = item.icon;
-
-          return (
+        {/* Menu */}
+        <nav className="space-y-2">
+          {menu[role].map((item, index) => (
             <NavLink
-              key={item.path}
+              key={index}
+              end
               to={item.path}
               className={({ isActive }) =>
-                `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300
+                `flex items-center gap-3 px-4 py-1 rounded-lg text-sm font-normal transition-all
                 ${
                   isActive
-                    ? `bg-gradient-to-r ${item.color} text-white shadow-lg`
-                    : "text-gray-600 hover:bg-gray-100"
+                    ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
+                    : "text-gray-800 hover:bg-gray-100"
                 }`
               }
             >
-              <Icon className="w-5 h-5 group-hover:scale-110 transition" />
-              <span className="text-sm font-medium">{item.label}</span>
+              <item.icon size={18} />
+              {item.name}
             </NavLink>
-          );
-        })}
-      </nav>
-    </aside>
-  );
-};
+          ))}
+        </nav>
+      </div>
 
-export default Sidebar;
+      {/* Bottom Actions */}
+      <div className="space-y-3 px-2">
+        <NavLink
+          to={`/${role}/support`}
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-2 py-1 rounded-lg text-sm font-medium
+     ${
+       isActive
+         ? "bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md"
+         : "bg-gray-100 text-gray-700"
+     }`
+          }
+        >
+          <Headphones size={18} />
+          Contact Support
+        </NavLink>
+
+        <button className="flex items-center gap-3 px-2 py-1 text-red-500">
+          <LogOut size={18} />
+          Logout
+        </button>
+      </div>
+    </div>
+  );
+}

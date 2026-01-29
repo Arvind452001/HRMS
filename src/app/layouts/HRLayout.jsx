@@ -3,12 +3,13 @@ import Sidebar from "../../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
 const HRLayout = () => {
-   const user = JSON.parse(localStorage.getItem("user") || "{}")
-  const role = user.role || "employee"
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role;
+  
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <Sidebar role={role}/>
+      <Sidebar role={role} />
 
       {/* Right Section */}
       <div className="flex-1 flex flex-col">

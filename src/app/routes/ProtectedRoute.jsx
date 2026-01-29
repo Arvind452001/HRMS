@@ -1,14 +1,18 @@
-// app/routes/ProtectedRoute.jsx
 import { Navigate, Outlet } from "react-router-dom"
-import { useAuth } from "../../auth/AuthContext"
 
-const ProtectedRoute = ({ allowed }) => {
-  const { user } = useAuth()
+export default function ProtectedRoute({ allowed }) {
+  const user = JSON.parse(localStorage.getItem("user"))
 
-  if (!user) return <Navigate to="/login" />
-  if (!allowed.includes(user.role)) return <Navigate to="/login" />
+  // not logged in
+  if (!user?.token) {
+    return <Navigate to="/login" replace />
+  }
+
+  // role not allowed
+  if (allowed && !allowed.includes(user.role)) {
+    return <Navigate to="/login" replace />
+    // or /unauthorized
+  }
 
   return <Outlet />
 }
-
-export default ProtectedRoute
