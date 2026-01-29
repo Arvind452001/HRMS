@@ -28,10 +28,15 @@ import AttendanceEmployee from "../pages/employee-pages/AttendanceEmployee";
 import Dashboard from "../pages/employee-pages/Dashboard";
 import MyProfile from "../pages/employee-pages/MyProfile";
 import Support from "../pages/employee-pages/Support";
+import Redirect from "./Redirect";
 
 export default function AppRoutes() {
   return (
     <Routes>
+
+      {/* ROOT REDIRECT */}
+      <Route path="/" element={<Redirect />} />
+
       {/* ===== PUBLIC ROUTES ===== */}
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
