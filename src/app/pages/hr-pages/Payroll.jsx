@@ -1,9 +1,10 @@
 import React from 'react'
+import PayrollList from '../../../components/payRoll-components/PayrollList'
 
 const Payroll = () => {
   return (
     <div>
-      <h1>hr payrol</h1>
+     <PayrollList/>
     </div>
   )
 }

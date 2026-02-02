@@ -42,13 +42,15 @@ const Login = () => {
     <div
       className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
       style={{
-        backgroundImage: "url('/src/assets/bg-1.jpg')",
+        backgroundImage: "url('/src/assets/bg-2.png')",
       }}
     >
+       {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50 " />
       {/* Glass Card */}
-      <div className="w-full max-w-md bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
-        <h2 className="text-lg  mb-1">Welcome to</h2>
-        <h1 className="text-3xl  font-bold mb-6">HRMS</h1>
+      <div className="w-full max-w-md bg-white/20 backdrop-blur-lg border  border-white/30 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+       <h2 className="text-sm text-gray-200">Welcome to</h2>
+        <h1 className="text-2xl text-gray-200 font-semibold mb-6">HRMS</h1>
 
         {/* Tabs */}
         <div className="flex gap-3 mb-6">

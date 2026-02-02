@@ -1,23 +1,25 @@
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import { Outlet } from "react-router-dom";
+import Sidebar from "../../components/common-components/Sidebar";
+import Header from "../../components/common-components/Header";
 
 const HRLayout = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.role;
-  
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
       <Sidebar role={role} />
 
       {/* Right Section */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <Header />
+      <div className="flex flex-1 flex-col min-w-0">
+        {/* Header (fixed) */}
+        <div className="shrink-0">
+          <Header />
+        </div>
 
-        {/* Page Content */}
-        <main className="flex-1 p-6">
+        {/* ✅ MAIN SCROLL AREA (X + Y both enabled) */}
+        <main className="flex-1 overflow-x-auto overflow-y-auto px-6 py-2 min-w-0">
           <Outlet />
         </main>
       </div>

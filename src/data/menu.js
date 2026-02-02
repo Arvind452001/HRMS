@@ -35,3 +35,56 @@ export const menu = {
     { name: "Company Policies", icon: Briefcase, path: "companyPolicies" },
   ],
 };
+
+
+
+export const payrollData=[
+  {
+  id: 1,
+  name: "Andrew Charlie",
+  role: "HRMS-Admin",
+  avatar: "https://i.pravatar.cc/40?img=12",
+  startDate: "Dec 29, 2024",
+  endDate: "Jan 28, 2025",
+  days: 22,
+  hours: "176h 39m",
+  amount: "20,000/-",
+  // status: i === 1 ? "Unpaid" : "Paid",
+},
+{
+  id: 2,
+  name: "Andrew Charlie",
+  role: "HRMS-Admin",
+  avatar: "https://i.pravatar.cc/40?img=12",
+  startDate: "Dec 29, 2024",
+  endDate: "Jan 28, 2025",
+  days: 22,
+  hours: "176h 39m",
+  amount: "20,000/-",
+  // status: i === 1 ? "Unpaid" : "Paid",
+},{
+  id: 3,
+  name: "Andrew Charlie",
+  role: "HRMS-Admin",
+  avatar: "https://i.pravatar.cc/40?img=12",
+  startDate: "Dec 29, 2024",
+  endDate: "Jan 28, 2025",
+  days: 22,
+  hours: "176h 39m",
+  amount: "20,000/-",
+  // status: i === 1 ? "Unpaid" : "Paid",
+},
+{
+  id: 4,
+  name: "Andrew Charlie",
+  role: "HRMS-Admin",
+  avatar: "https://i.pravatar.cc/40?img=12",
+  startDate: "Dec 29, 2024",
+  endDate: "Jan 28, 2025",
+  days: 22,
+  hours: "176h 39m",
+  amount: "20,000/-",
+  // status: i === 1 ? "Unpaid" : "Paid",
+}
+
+]

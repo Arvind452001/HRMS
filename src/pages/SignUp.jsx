@@ -52,16 +52,16 @@ const Signup = () => {
   return (
     <div
       className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
-      style={{ backgroundImage: "url('/src/assets/bg-1.jpg')" }}
+      style={{ backgroundImage: "url('/src/assets/bg-2.png')" }}
     >
       {/* Overlay */}
-      {/* <div className="absolute inset-0 bg-black/50 " /> */}
-      <div className="absolute inset-0  " />
+      <div className="absolute inset-0 bg-black/50 " />
+      {/* <div className="absolute inset-0  " /> */}
 
       {/* Card */}
       <div className="relative w-full h-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 sm:p-4 text-white shadow-xl">
         <h2 className="text-sm text-gray-200">Welcome to</h2>
-        <h1 className="text-2xl font-semibold mb-6">HRMS</h1>
+        <h1 className="text-2xl  font-semibold mb-6">HRMS</h1>
 
         {/* Tabs */}
         <div className="flex gap-2 mb-5">
