@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import EmployeeHeader from "../../../components/employee-components/EmployeeHeader";
-import EmployeeSummaryCard from "../../../components/employee-components/EmployeeSummaryCard";
+import EmployeeHeader from "../../HR-component/employee-components/EmployeeHeader";
+import EmployeeSummaryCard from "../../HR-component/employee-components/EmployeeSummaryCard";
 
 /* ================= Dummy API Data ================= */
 const summaryData = [

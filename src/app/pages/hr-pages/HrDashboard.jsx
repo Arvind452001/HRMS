@@ -1,9 +1,9 @@
 import React from "react";
-import DashboardHeader from "../../../components/hrDashboard-components/DashboardHeader";
-import JanuaryOverview from "../../../components/hrDashboard-components/JanuaryOverview";
-import EmployeesWorkHours from "../../../components/hrDashboard-components/EmployeesWorkHours";
-import NewHiresThisMonth from "../../../components/hrDashboard-components/NewHiresThisMonth";
-import TodaysSchedule from "../../../components/hrDashboard-components/TodaysSchedule";
+import DashboardHeader from "../../HR-component/hrDashboard-components/DashboardHeader";
+import JanuaryOverview from "../../HR-component/hrDashboard-components/JanuaryOverview";
+import EmployeesWorkHours from "../../HR-component/hrDashboard-components/EmployeesWorkHours";
+import NewHiresThisMonth from "../../HR-component/hrDashboard-components/NewHiresThisMonth";
+import TodaysSchedule from "../../HR-component/hrDashboard-components/TodaysSchedule";
 
 
 const HrDashboard = () => {

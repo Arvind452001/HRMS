@@ -29,6 +29,7 @@ import Dashboard from "../pages/employee-pages/Dashboard";
 import MyProfile from "../pages/employee-pages/MyProfile";
 import Support from "../pages/employee-pages/Support";
 import Redirect from "./Redirect";
+import NotFound from "../../pages/NotFound";
 
 export default function AppRoutes() {
   return (
@@ -50,14 +51,15 @@ export default function AppRoutes() {
           <Route path="dashboard" element={<HrDashboard />} />
           <Route path="employees" element={<Employees />} />
           <Route path="job-post" element={<Jobs />} />
-          <Route path="ats" element={<ATS />} />
+          <Route path="atss" element={<ATS />} />
           <Route path="payroll" element={<Payroll />} />
           <Route path="attendance" element={<Attendance />} />
-          <Route path="performance" element={<Performance />} />
+          <Route path="performancee" element={<Performance />} />
           <Route path="leave" element={<LeaveManagement />} />
           <Route path="company-policy" element={<CompanyPolicy />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="support" element={<Support />} />
+          <Route path="setting" element={<Settings />} />
+          <Route path="supportt" element={<Support />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Route>
 
@@ -78,3 +80,5 @@ export default function AppRoutes() {
     </Routes>
   );
 }
+
+

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createEmployee } from "../../api/employeeApi";
+import { createEmployee } from './../../../api/employee-Api';
 
 export default function AddEmployeeModal({ onClose }) {
   const [form, setForm] = useState({

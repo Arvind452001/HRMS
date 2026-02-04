@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../../components/common-components/Sidebar";
-import Header from "../../components/common-components/Header";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
 const EmployeeLayout = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}")

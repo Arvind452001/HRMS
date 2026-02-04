@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { User, Mail, Lock, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from "../api/authApi"; // Make sure this exists
+import { signupUser } from './../api/auth-Api';
 
 const Signup = () => {
   const navigate = useNavigate();

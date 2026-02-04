@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/logo.jpg";
+import logo from ".././assets/logo.jpg";
 import { Headphones, LogOut } from "lucide-react";
-import { menu } from "../../data/menu";
+import { menu } from "../data/Dummy-Data";
 
 export default function Sidebar({ role }) {
   return (

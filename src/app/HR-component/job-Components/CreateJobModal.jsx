@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createJob } from "../../api/jobApi";
+import { createJob } from "../../../api/HR-Api";
 
 export default function CreateNewJobModal({
   isOpen,

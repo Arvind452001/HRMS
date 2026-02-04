@@ -16,12 +16,9 @@ const payrollData = Array.from({ length: 8 }).map((_, i) => ({
 export default function PayrollList() {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-      
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-gray-800">
-          Payroll List
-        </h2>
+        <h2 className="text-sm font-semibold text-gray-800">Payroll List</h2>
 
         <div className="flex items-center gap-2">
           <input
@@ -72,28 +69,16 @@ export default function PayrollList() {
                       alt=""
                     />
                     <div>
-                      <p className="font-medium text-gray-800">
-                        {item.name}
-                      </p>
-                      <p className="text-[10px] text-gray-500">
-                        {item.role}
-                      </p>
+                      <p className="font-medium text-gray-800">{item.name}</p>
+                      <p className="text-[10px] text-gray-500">{item.role}</p>
                     </div>
                   </div>
                 </td>
 
-                <td className="px-3 py-3 text-gray-600">
-                  {item.startDate}
-                </td>
-                <td className="px-3 py-3 text-gray-600">
-                  {item.endDate}
-                </td>
-                <td className="px-3 py-3 text-gray-600">
-                  {item.days}
-                </td>
-                <td className="px-3 py-3 text-gray-600">
-                  {item.hours}
-                </td>
+                <td className="px-3 py-3 text-gray-600">{item.startDate}</td>
+                <td className="px-3 py-3 text-gray-600">{item.endDate}</td>
+                <td className="px-3 py-3 text-gray-600">{item.days}</td>
+                <td className="px-3 py-3 text-gray-600">{item.hours}</td>
                 <td className="px-3 py-3 font-medium text-gray-700">
                   {item.amount}
                 </td>

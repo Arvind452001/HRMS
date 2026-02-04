@@ -1,9 +1,11 @@
 import React from 'react'
-import PayrollList from '../../../components/payRoll-components/PayrollList'
+import PaymentMethodCard from '../../HR-component/payRoll-components/PaymentMethodCard'
+import PayrollList from '../../HR-component/payRoll-components/PayrollList'
 
 const Payroll = () => {
   return (
     <div>
+      <PaymentMethodCard/>
      <PayrollList/>
     </div>
   )
