@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "../../pages/Login";
-import Signup from "../../pages/SignUp";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -12,7 +11,6 @@ import EmployeeLayout from "../layouts/EmployeeLayout";
 import HrDashboard from "../pages/hr-pages/HrDashboard";
 import Employees from "../pages/hr-pages/Employees";
 import Jobs from "../pages/hr-pages/Jobs";
-import ATS from "../pages/hr-pages/ATS";
 import Payroll from "../pages/hr-pages/Payroll";
 import Attendance from "../pages/hr-pages/Attendance";
 import Performance from "../pages/hr-pages/Performance";
@@ -30,18 +28,25 @@ import MyProfile from "../pages/employee-pages/MyProfile";
 import Support from "../pages/employee-pages/Support";
 import Redirect from "./Redirect";
 import NotFound from "../../pages/NotFound";
+import AddVisitorPage from "../../pages/AddVisitorPage";
+import AdminVisitorsPage from "../pages/hr-pages/AdminVisitorsPage";
+import AdminVisitorDetailsPage from "../pages/hr-pages/AdminVisitorDetailsPage";
+import PublicJobDetails from "../../pages/PublicJobDetails";
+import ApplyJob from "../../pages/ApplyJob";
+import ApplicationsPage from "../pages/hr-pages/ApplicationsPage";
 
 export default function AppRoutes() {
   return (
     <Routes>
-
       {/* ROOT REDIRECT */}
       <Route path="/" element={<Redirect />} />
 
       {/* ===== PUBLIC ROUTES ===== */}
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/visitorPage" element={<AddVisitorPage />} />
+       <Route path="/jobs/:slug" element={<PublicJobDetails />} />
+        <Route path="/apply/:slug" element={<ApplyJob />} />
       </Route>
 
       {/* ===== HR PROTECTED ROUTES ===== */}
@@ -50,8 +55,13 @@ export default function AppRoutes() {
           <Route index element={<HrDashboard />} />
           <Route path="dashboard" element={<HrDashboard />} />
           <Route path="employees" element={<Employees />} />
+          <Route path="VisitorsPage" element={<AdminVisitorsPage />} />
+          <Route
+            path="visitorDetails/:id"
+            element={<AdminVisitorDetailsPage />}
+          />
           <Route path="job-post" element={<Jobs />} />
-          <Route path="atss" element={<ATS />} />
+          <Route path="Applications" element={<ApplicationsPage />} />
           <Route path="payroll" element={<Payroll />} />
           <Route path="attendance" element={<Attendance />} />
           <Route path="performancee" element={<Performance />} />
@@ -80,5 +90,3 @@ export default function AppRoutes() {
     </Routes>
   );
 }
-
-

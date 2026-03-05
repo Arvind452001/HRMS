@@ -1,19 +1,34 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export const signupUser = async (data) => {
+export const getAllEmployeesApi = async (filters) => {
+
   try {
-    const response = await axiosInstance.post("/auth/signup", data);
+    // console.log("responsedddddd")
+    const response = await axiosInstance.get("/admin/allEmployees", {
+      params: filters,
+    });
+// console.log("response",response.data.data)
     return response.data;
   } catch (err) {
     throw err.response?.data || { success: false, message: err.message };
   }
 };
 
-export const loginUser = async (data) => {
+export const loginApi = async (data) => {
   try {
     const response = await axiosInstance.post("/auth/login", data);
     return response.data;
   } catch (err) {
-    throw err.response?.data || { success: false, message: err.message };
+    throw err.response?.data || { message: err.message };
+  }
+};
+
+
+export const createVisitorApi = async (data) => {
+  try {
+    const response = await axiosInstance.post("/visitor/create", data);
+    return response.data;
+  } catch (err) {
+    throw err.response?.data || { message: err.message };
   }
 };

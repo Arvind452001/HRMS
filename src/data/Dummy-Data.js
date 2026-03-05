@@ -16,8 +16,9 @@ export const menu = {
   hr: [
     { name: "Dashboard", icon: LayoutGrid, path: "" }, // index route
     { name: "Employees", icon: Users, path: "employees" },
+     { name: "Visitors", icon: Users, path: "VisitorsPage" },
     { name: "Job Post", icon: Briefcase, path: "job-post" },
-    { name: "ATS", icon: Target, path: "ats" },
+    { name: "Applications", icon: Target, path: "Applications" },
     { name: "Attendance Management", icon: CalendarCheck, path: "attendance" },
     { name: "Performance Management", icon: BarChart2, path: "performance" },
     { name: "Leave Management", icon: Calendar, path: "leave" },
@@ -34,6 +35,44 @@ export const menu = {
     { name: "Company Policies", icon: Briefcase, path: "companyPolicies" },
   ],
 };
+
+ export const experienceOptions = [
+    "Less than 1 year",
+    "1-2 years",
+    "2-3 years",
+    "3-4 years",
+    "4-5 years",
+    "5-6 years",
+    "6-7 years",
+    "7-8 years",
+    "8-9 years",
+    "9-10 years",
+    "10+ years",
+  ];
+
+  export const interviewDomains = [
+    "MERN",
+    "React",
+    "Node.js",
+    "Java",
+    "Python",
+    "DevOps",
+    "UI/UX",
+    "QA",
+    "Data Science",
+    "Flutter",
+    "Android",
+    "iOS",
+  ];
+
+  export const jobSourceOptions = [
+    "LinkedIn",
+    "Naukri",
+    "Indeed",
+    "Reference",
+    "Company Website",
+    "Other",
+  ];
 
 export const fetchAttendance = () => {
   return new Promise((resolve) => {
@@ -160,4 +199,67 @@ export const dummyJobs = [
     location: "Remote",
     status: "Inactive",
   },
+];
+
+
+export const employees = [
+  {
+    id: 1,
+    name: "Arjun Sharma",
+    email: "arjun@company.com",
+    department: "HR",
+    role: "HR Manager",
+    roleClass: "badge-primary",
+    status: "Active",
+    joinDate: "12 Jan 2023",
+  },
+  {
+    id: 2,
+    name: "Priya Verma",
+    email: "priya@company.com",
+    department: "IT",
+    role: "Frontend Developer",
+    roleClass: "badge-secondary",
+    status: "Active",
+    joinDate: "05 Mar 2022",
+  },
+  {
+    id: 3,
+    name: "Rahul Singh",
+    email: "rahul@company.com",
+    department: "Finance",
+    role: "Accountant",
+    roleClass: "badge-accent",
+    status: "Active",
+    joinDate: "20 Jul 2021",
+  },
+  {
+    id: 4,
+    name: "Sneha Patel",
+    email: "sneha@company.com",
+    department: "IT",
+    role: "Backend Developer",
+    roleClass: "badge-info",
+    status: "Active",
+    joinDate: "18 Sep 2023",
+  },
+  {
+    id: 5,
+    name: "Vikram Rao",
+    email: "vikram@company.com",
+    department: "Operations",
+    role: "Operations Lead",
+    roleClass: "badge-warning",
+    status: "Active",
+    joinDate: "10 Feb 2020",
+  },
+];
+
+export const attendanceData = [
+  { id: 1, name: "Arjun Sharma", department: "HR", status: "Present" },
+  { id: 2, name: "Priya Verma", department: "IT", status: "Present" },
+  { id: 3, name: "Rahul Singh", department: "Finance", status: "Absent" },
+  { id: 4, name: "Sneha Patel", department: "IT", status: "Present" },
+  { id: 5, name: "Vikram Rao", department: "Operations", status: "Absent" },
+  { id: 6, name: "Neha Kapoor", department: "HR", status: "Present" },
 ];

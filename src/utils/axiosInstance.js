@@ -1,20 +1,25 @@
 import axios from "axios";
 
-// Create axios instance
+/* ================= Axios Instance ================= */
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api", // Change to your backend URL
+  baseURL: "http://localhost:3000/api",
+
+  // baseURL: "https://hrms-server-app.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Add request interceptor to include token
+/* ================= Request Interceptor ================= */
 axiosInstance.interceptors.request.use(
   (config) => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    if (user?.token) {
-      config.headers.Authorization = `Bearer ${user.token}`;
+    // Get token directly (no JSON.parse)
+    const token = localStorage.getItem("technoToken");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error)

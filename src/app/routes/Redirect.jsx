@@ -2,12 +2,15 @@
 import { Navigate } from "react-router-dom";
 
 const Redirect = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
+  // ✅ No user → Login Page
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
+  // ✅ Role Based Redirect
   if (user.role === "hr") {
     return <Navigate to="/hr/dashboard" replace />;
   }
@@ -16,6 +19,7 @@ const Redirect = () => {
     return <Navigate to="/employee/dashboard" replace />;
   }
 
+  // fallback
   return <Navigate to="/login" replace />;
 };
 

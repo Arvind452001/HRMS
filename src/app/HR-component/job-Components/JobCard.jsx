@@ -1,60 +1,143 @@
 import React from "react";
 import { FaShareSquare } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
-const JobCard = ({ onShare }) => {
+const JobCard = ({ job, onShare, onView, onEdit, onDelete }) => {
+  const formatDate = (date) => {
+    if (!date) return "N/A";
+    return new Date(date).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const formatSalary = () => {
+    if (!job.salaryMin || !job.salaryMax)
+      return "Salary Not Disclosed";
+
+    return `₹${job.salaryMin.toLocaleString()} - ₹${job.salaryMax.toLocaleString()}`;
+  };
+
+  const getStatusColor = () => {
+    switch (job.status?.toLowerCase()) {
+      case "published":
+        return "bg-success/20 text-success";
+      case "closed":
+        return "bg-error/20 text-error";
+      case "archived":
+        return "bg-base-300 text-base-content";
+      case "draft":
+        return "bg-warning/20 text-warning";
+      default:
+        return "bg-base-200 text-base-content";
+    }
+  };
+
+  const shareUrl = `${window.location.origin}/jobs/${job.slug}`;
+
   return (
-    <div className="w-full max-w-md rounded-2xl bg-white p-5 shadow-md border border-gray-200">
-      
+    <div
+      onClick={onView}
+      className="relative w-full max-w-md rounded-2xl bg-base-100 p-5 shadow-md border border-base-200 
+      cursor-pointer hover:shadow-lg transition duration-200"
+    >
+
+      {/* ===== Edit & Delete Icons ===== */}
+      <div className="absolute top-2 right-3 flex gap-2">
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onEdit) onEdit(job);
+          }}
+          className="text-base-content/60 hover:text-info"
+        >
+          <FaEdit size={14} />
+        </button>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onDelete) onDelete(job);
+          }}
+          className="text-base-content/60 hover:text-error"
+        >
+          <FaTrash size={14} />
+        </button>
+
+      </div>
+
       {/* Top Row */}
       <div className="flex items-start justify-between">
-        {/* Active Badge */}
-        <span className="rounded-lg border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700">
-          Active Until : <span className="font-semibold">Jan 31, 2025</span>
+        
+        {/* Deadline Badge */}
+        <span className="rounded-lg border border-base-300 px-3 py-1 text-xs font-medium text-base-content/70">
+          DeadLine :{" "}
+          <span className="font-semibold">
+            {formatDate(job.applicationDeadline)}
+          </span>
         </span>
 
-        {/* Image */}
-        <img
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-          alt="UI UX"
-          className="h-14 w-20 rounded-lg object-cover"
-        />
+        {/* Status Badge */}
+        <span
+          className={`rounded-lg px-3 my-2 py-1 text-xs font-medium ${getStatusColor()}`}
+        >
+          {job.status}
+        </span>
       </div>
 
       {/* Title */}
-      <h3 className="mt-4 text-lg font-semibold text-gray-900">
-        UI/UX Designer
+      <h3 className="mt-4 text-lg font-semibold text-base-content">
+        {job.title}
       </h3>
 
-      {/* Description */}
-      <p className="mt-2 text-sm text-gray-600 line-clamp-3">
-        A UI/UX Designer is responsible for designing the overall look, feel,
-        and usability of digital products to ensure a seamless and engaging
-        user experience...
+      {/* Company + Location */}
+      <p className="text-sm text-base-content/60">
+        {job.companyName} • {job.location}
       </p>
+
+      {/* Overview */}
+      <p className="mt-2 text-sm text-base-content/70 line-clamp-3">
+        {job.overview || "No description available."}
+      </p>
+
+      {/* Experience + Salary */}
+      <div className="mt-3 text-xs text-base-content/70 space-y-1">
+        <p>
+          Experience: {job.experienceMin} - {job.experienceMax} yrs
+        </p>
+        <p>Salary: {formatSalary()}</p>
+      </div>
 
       {/* Footer */}
       <div className="mt-4 flex items-center justify-between">
         
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          <span className="flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
-            <span className="h-2 w-2 rounded-full bg-green-600"></span>
-            Design
+
+          <span className="flex items-center gap-1 rounded-full bg-success/20 px-3 py-1 text-xs font-medium text-success">
+            <span className="h-2 w-2 rounded-full bg-success"></span>
+            {job.department}
           </span>
 
-          <span className="rounded-full border border-gray-300 px-3 py-1 text-xs text-gray-600">
-            Full Time
+          <span className="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/70">
+            {job.employmentType}
           </span>
 
-          <span className="rounded-full border border-gray-300 px-3 py-1 text-xs text-gray-600">
-            Onsite
+          <span className="rounded-full border border-base-300 px-3 py-1 text-xs text-base-content/70">
+            {job.workplaceType}
           </span>
+
         </div>
 
         {/* Share Icon */}
         <button
-          onClick={onShare}
-          className="rounded-lg p-1 text-gray-500 hover:bg-gray-100"
+          onClick={(e) => {
+            e.stopPropagation();
+            onShare(shareUrl);
+          }}
+          className="rounded-lg p-1 text-base-content/60 hover:bg-base-200"
         >
           <FaShareSquare size={18} />
         </button>

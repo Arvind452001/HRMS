@@ -1,9 +1,23 @@
 import { IoClose } from "react-icons/io5";
 import { FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import { SiIndeed } from "react-icons/si";
-import { HiBriefcase } from "react-icons/hi2"; // ✅ for Naukri
-export default function SharePostModal({ isOpen, onClose }) {
+import { HiBriefcase } from "react-icons/hi2";
+import { useState } from "react";
+
+export default function SharePostModal({ isOpen, onClose, shareUrl }) {
+  const [copied, setCopied] = useState(false);
+
   if (!isOpen) return null;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (error) {
+      console.error("Copy failed", error);
+    }
+  };
 
   return (
     <div
@@ -30,24 +44,38 @@ export default function SharePostModal({ isOpen, onClose }) {
         {/* Icons */}
         <div className="mt-6 flex justify-center gap-5">
           
-          {/* LinkedIn */}
           <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#0A66C2] text-white hover:opacity-90">
             <FaLinkedinIn size={16} />
           </div>
 
-          {/* Instagram */}
           <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white hover:opacity-90">
             <FaInstagram size={16} />
           </div>
 
-          {/* Naukri */}
           <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#2E6EB5] text-white hover:opacity-90">
             <HiBriefcase size={16} />
           </div>
 
-          {/* Indeed */}
           <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#003A9B] text-white hover:opacity-90">
             <SiIndeed size={16} />
+          </div>
+        </div>
+
+        {/* 🔥 Copy Link Section (Added) */}
+        <div className="mt-6">
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={shareUrl}
+              readOnly
+              className="w-full rounded-md border px-2 py-1 text-xs text-gray-600"
+            />
+            <button
+              onClick={handleCopy}
+              className="rounded-md bg-sky-500 px-3 py-1 text-xs font-semibold text-white hover:opacity-90"
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
           </div>
         </div>
 

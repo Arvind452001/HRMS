@@ -1,6 +1,6 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export const createEmployee = async (data) => {
+export const getAllEmployee = async (data) => {
   try {
     const response = await axiosInstance.post("/auth/signup", data);
     return response.data;

@@ -9,10 +9,8 @@ export default function JobHeader({
 }) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      
       {/* Left: Icon + Text */}
       <div className="flex min-w-0 items-center gap-3">
-        
         {/* Icon */}
         <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-gray-300 bg-white">
           <IoPeopleSharp className="h-5 w-5 text-sky-600" />
@@ -31,16 +29,15 @@ export default function JobHeader({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-2">
-        
         {/* Filter */}
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="rounded-md border border-gray-300 px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="border px-3 py-1 rounded text-sm"
         >
-          <option value="All">All</option>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
+          <option value="open">Open</option>
+          <option value="closed">Closed</option>
+          <option value="draft">Draft</option>
         </select>
 
         {/* Create Button */}

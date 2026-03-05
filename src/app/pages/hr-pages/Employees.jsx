@@ -1,158 +1,178 @@
 import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../../HR-component/employee-components/EmployeeHeader";
 import EmployeeSummaryCard from "../../HR-component/employee-components/EmployeeSummaryCard";
+import { getAllEmployeesApi } from "../../../api/auth-Api";
 
-/* ================= Dummy API Data ================= */
-const summaryData = [
-  { label: "All Employees", value: 1250 },
-  { label: "Active", value: 1180 },
-  { label: "In-Active", value: 70 },
-  { label: "New Employees", value: 5 },
-  { label: "Number of Department", value: 12 },
-  { label: "Employees on Leave", value: 5 },
-];
-
-const dummyEmployees = Array.from({ length: 10 }).map((_, i) => ({
-  id: i + 1,
-  name: "Shri Sharma",
-  email: "shris123@gmail.com",
-  phone: "+91 4789587456",
-  jobTitle: "UI/UX Designer",
-  location: i % 3 === 0 ? "Remote" : "Onsite",
-  joiningDate: "12 Aug 2022",
-  status: i % 4 === 0 ? "In-Active" : "Active",
-}));
-
-/* ================= Component ================= */
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
+  const [filters, setFilters] = useState({
+    status: "",
+    active: "",
+  });
+console.log(employees.length)
+  /* ================= Fetch Employees ================= */
   useEffect(() => {
-    setEmployees(dummyEmployees);
-  }, []);
+    const fetchEmployees = async () => {
+      try {
+        setLoading(true);
+
+        const cleanedFilters = {
+          ...Object.fromEntries(
+            Object.entries(filters).filter(([_, value]) => value !== ""),
+          ),
+          role: "employee",
+        };
+
+        const res = await getAllEmployeesApi(cleanedFilters);
+        setEmployees(res?.data);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEmployees();
+  }, [filters]);
+
+  /* ================= Search Filter ================= */
+  const filteredEmployees = employees.filter((emp) =>
+    emp.name?.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
-    // 🔴 IMPORTANT: allow horizontal scroll on small screens
-    <div className="space-y-4 w-full overflow-x-auto">
-
-      {/* ================= Header ================= */}
+    <div className="space-y-6 w-full">
       <EmployeeHeader />
+      <EmployeeSummaryCard employees={employees} />
 
-      {/* ================= Summary Cards ================= */}
-      <EmployeeSummaryCard />
-
-      {/* ================= Employees List ================= */}
-      <div className="w-full rounded-xl bg-white shadow-sm border border-gray-300">
+      <div className="card bg-base-100 shadow border border-base-200">
         
-        {/* Header */}
-        <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between border-b border-gray-300">
-          <h2 className="text-sm font-semibold text-gray-900">
-            Employees List
-          </h2>
+        {/* ================= Header ================= */}
+        <div className="card-body border-b border-base-200 p-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search"
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-xs outline-none w-full sm:w-auto"
-            />
-            <button className="rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-600">
-              Filter
-            </button>
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full">
+
+              {/* Search */}
+              <input
+                type="text"
+                placeholder="Search by name"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="input input-bordered input-sm w-full sm:w-56"
+              />
+
+              {/* Status Dropdown */}
+              <select
+                className="select select-bordered select-sm w-full sm:w-40"
+                value={filters.status}
+                onChange={(e) =>
+                  setFilters({ ...filters, status: e.target.value })
+                }
+              >
+                <option value="">All Status</option>
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+                <option value="rejected">Rejected</option>
+              </select>
+
+              {/* Active Dropdown */}
+              <select
+                className="select select-bordered select-sm w-full sm:w-40"
+                value={filters.active}
+                onChange={(e) =>
+                  setFilters({ ...filters, active: e.target.value })
+                }
+              >
+                <option value="">All</option>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
+
+            </div>
           </div>
         </div>
 
         {/* ================= Table ================= */}
-        {/* 🔴 IMPORTANT: wrapper must handle horizontal scroll */}
-        <div className="relative w-full overflow-x-auto">
-          <table className="min-w-[900px] w-full text-xs border-collapse">
-            
-            <thead className="bg-gray-50 text-gray-600 border-b border-gray-300">
-              <tr>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Select
-                </th>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Employee Name
-                </th>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Email
-                </th>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Phone
-                </th>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Job Title
-                </th>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Location
-                </th>
-                <th className="px-4 py-2 text-left border-r border-gray-300">
-                  Joining Date
-                </th>
-                <th className="px-4 py-2 text-left">
-                  Status
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {employees.map((emp) => (
-                <tr
-                  key={emp.id}
-                  className="border-b border-gray-300 hover:bg-gray-50 text-gray-700"
-                >
-                  <td className="px-4 py-2 border-r border-gray-300">
-                    <input type="checkbox" />
-                  </td>
-
-                  <td className="px-4 py-2 font-medium border-r border-gray-300">
-                    {emp.name}
-                  </td>
-
-                  <td className="px-4 py-2 text-gray-600 border-r border-gray-300">
-                    {emp.email}
-                  </td>
-
-                  <td className="px-4 py-2 border-r border-gray-300">
-                    {emp.phone}
-                  </td>
-
-                  <td className="px-4 py-2 border-r border-gray-300">
-                    {emp.jobTitle}
-                  </td>
-
-                  <td className="px-4 py-2 border-r border-gray-300">
-                    {emp.location}
-                  </td>
-
-                  <td className="px-4 py-2 border-r border-gray-300">
-                    {emp.joiningDate}
-                  </td>
-
-                  <td className="px-4 py-2">
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                        emp.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {emp.status}
-                    </span>
-                  </td>
+        <div className="overflow-x-auto">
+          {loading ? (
+            <div className="p-6 text-center text-sm opacity-60">
+              <span className="loading loading-spinner loading-sm"></span>
+              <p className="mt-2">Loading employees...</p>
+            </div>
+          ) : filteredEmployees.length === 0 ? (
+            <div className="p-6 text-center text-sm opacity-60">
+              No employees found
+            </div>
+          ) : (
+            <table className="table table-zebra table-sm">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Contact</th>
+                  <th>Role</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                  <th>Active</th>
                 </tr>
-              ))}
-            </tbody>
+              </thead>
 
-          </table>
+              <tbody>
+                {filteredEmployees.map((emp) => (
+                  <tr key={emp._id}>
+
+                    <td>{emp.name}</td>
+
+                    <td>{emp.email}</td>
+
+                    <td>{emp.contactNo}</td>
+
+                    <td className="capitalize">{emp.role}</td>
+
+                    <td>{emp.department || "-"}</td>
+
+                    <td>
+                      <span
+                        className={`badge badge-sm ${
+                          emp.status === "approved"
+                            ? "badge-success"
+                            : emp.status === "pending"
+                            ? "badge-warning"
+                            : "badge-error"
+                        }`}
+                      >
+                        {emp.status}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span
+                        className={`badge badge-sm ${
+                          emp.isActive
+                            ? "badge-success"
+                            : "badge-error"
+                        }`}
+                      >
+                        {emp.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </td>
+
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* ================= Footer ================= */}
-        <div className="flex items-center justify-between p-3 text-[11px] text-gray-600 border-t border-gray-300">
-          <span>1–10 of 200 items</span>
-          <span>1 of 44 pages</span>
+        <div className="card-body border-t border-base-200 py-3 text-xs opacity-60">
+          {filteredEmployees.length} employees
         </div>
+
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginApi } from "../api/auth-Api";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -24,42 +25,52 @@ const Login = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
 
-    setErrors({});
-    console.log("Login Data:", formData);
-    // API call here
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await loginApi(formData);
+
+    // Save token
+    localStorage.setItem("technoToken", res.accessToken);
+
+    // Save user
+    localStorage.setItem("technoUser", JSON.stringify(res.user));
+
+   
+    alert("Login successful");
+
+    // redirect
+    navigate("/hr");
+
+  } catch (err) {
+    alert(err.message || "Login failed");
+  }
+};
+
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
+      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4 relative"
       style={{
         backgroundImage: "url('/src/assets/bg-2.png')",
       }}
     >
-       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 " />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+
       {/* Glass Card */}
-      <div className="w-full max-w-md bg-white/20 backdrop-blur-lg border  border-white/30 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
-       <h2 className="text-sm text-gray-200">Welcome to</h2>
+      <div className="relative w-full max-w-md bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+        <h2 className="text-sm text-gray-200">Welcome to</h2>
         <h1 className="text-2xl text-gray-200 font-semibold mb-6">HRMS</h1>
 
-        {/* Tabs */}
-        <div className="flex gap-3 mb-6">
-          <button className="flex-1 py-2 rounded-md bg-gradient-to-r from-blue-500 to-blue-800 text-white font-medium">
-            Log In
-          </button>
-          <button type="button" onClick={() => navigate("/signup")}  className="flex-1 py-2 rounded-md border border-white/50 text-white">
-            Sign Up
-          </button>
+        {/* Single Tab */}
+        <div className="mb-6">
+          <div className="w-full py-2 rounded-md bg-gradient-to-r from-blue-500 to-blue-800 text-white font-medium text-center">
+            Log In Page
+          </div>
         </div>
 
         {/* Form */}
@@ -99,26 +110,40 @@ const Login = () => {
               type="button"
               className="text-sm text-gray-200 hover:text-white"
             >
-              Recover Password
+              Forget Password
             </button>
           </div>
 
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-900 font-semibold text-white hover:opacity-90 transition"
+            className="block w-[30%] mx-auto py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-900 font-semibold text-white hover:opacity-90 transition"
           >
             Log In
           </button>
         </form>
 
-        {/* Footer */}
-        <p className="text-center text-sm mt-6">
-          Don’t have an account?{" "}
-          <span className="text-blue-300 cursor-pointer hover:underline" onClick={() => navigate("/signup")}>
-            Sign Up
-          </span>
-        </p>
+        <div className="mt-8 text-center space-y-3">
+  <p className="text-sm text-gray-200">Continue without logging in</p>
+
+  <div className="flex justify-center gap-6">
+    <button
+      type="button"
+      onClick={() => navigate("/visitorPage")}
+      className="text-blue-300 hover:text-white underline text-sm"
+    >
+      Visitor
+    </button>
+
+    <button
+      type="button"
+      onClick={() => navigate("/jobs/:slug")}
+      className="text-blue-300 hover:text-white underline text-sm"
+    >
+      View Jobs
+    </button>
+  </div>
+</div>
       </div>
     </div>
   );
