@@ -3,6 +3,7 @@ import { getALLVisitorApi } from "../../../api/visitor-Api";
 import { getAllEmployeesApi } from "../../../api/auth-Api";
 import { useNavigate } from "react-router-dom";
 import InterviewScheduleModal from './../../HR-component/model/InterviewScheduleModal';
+import Loader from "../../../components/Loader";
 
 export default function AdminVisitorsPage() {
   const [visitors, setVisitors] = useState([]);
@@ -57,7 +58,7 @@ export default function AdminVisitorsPage() {
   if (visitorsLoading || employeesLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
+       <Loader/>
       </div>
     );
   }

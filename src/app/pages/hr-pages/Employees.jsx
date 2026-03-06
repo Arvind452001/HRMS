@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../../HR-component/employee-components/EmployeeHeader";
 import EmployeeSummaryCard from "../../HR-component/employee-components/EmployeeSummaryCard";
 import { getAllEmployeesApi } from "../../../api/auth-Api";
+import Loader from "../../../components/Loader";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -99,9 +100,9 @@ console.log(employees.length)
         {/* ================= Table ================= */}
         <div className="overflow-x-auto">
           {loading ? (
-            <div className="p-6 text-center text-sm opacity-60">
-              <span className="loading loading-spinner loading-sm"></span>
-              <p className="mt-2">Loading employees...</p>
+            <div className="p-6 text-center text-sm opacity-60 flex items-center justify-center">
+              {/* <span className="loading loading-spinner loading-sm"></span> */}
+               <Loader/>
             </div>
           ) : filteredEmployees.length === 0 ? (
             <div className="p-6 text-center text-sm opacity-60">

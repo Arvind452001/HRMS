@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllApplicationsApi, updateApplicationStatusApi } from "../../../api/applicationApi";
 import { MdModeEdit } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
+import Loader from "../../../components/Loader";
 
 export default function ApplicationsPage() {
   const [applications, setApplications] = useState([]);
@@ -57,8 +58,9 @@ export default function ApplicationsPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-10">
-        <span className="loading loading-spinner loading-lg"></span>
+     <div className="flex items-center justify-center min-h-screen">
+        {/* <span className="loading loading-spinner loading-lg"></span> */}
+        <Loader/>
       </div>
     );
   }

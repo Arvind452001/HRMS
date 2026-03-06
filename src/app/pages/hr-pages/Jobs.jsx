@@ -5,6 +5,7 @@ import JobCard from "../../HR-component/job-Components/JobCard";
 import JobFormModal from "../../HR-component/job-Components/JobFormModal";
 import JobDeleteModal from "../../HR-component/job-Components/JobDeleteModel";
 import { getAllJobApi, deleteJobApi } from "../../../api/jobApi"; // ✅ added deleteJobApi
+import Loader from "../../../components/Loader";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -95,7 +96,10 @@ const Jobs = () => {
 
       {/* Content */}
       {loading ? (
-        <p className="text-center text-sm text-gray-500">Loading jobs...</p>
+        <div className="flex items-center justify-center min-h-screen">
+          <Loader/>
+             
+      </div>
       ) : jobs.length === 0 ? (
         <p className="text-center text-sm text-gray-400">No jobs found</p>
       ) : (
