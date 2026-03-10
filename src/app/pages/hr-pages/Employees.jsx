@@ -1,167 +1,230 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import EmployeeHeader from "../../HR-component/employee-components/EmployeeHeader";
 import EmployeeSummaryCard from "../../HR-component/employee-components/EmployeeSummaryCard";
-import { getAllEmployeesApi } from "../../../api/auth-Api";
+import EmployeeModal from "../../HR-component/employee-components/EmployeeModal";
+
 import Loader from "../../../components/Loader";
 
+import {
+  deleteEmployeeApi,
+  getAllEmployeesApi,
+} from "../../../api/employee-Api";
+
 export default function Employees() {
+  const navigate = useNavigate();
+
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
 
-  const [filters, setFilters] = useState({
-    status: "",
-    active: "",
-  });
-console.log(employees.length)
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [mode, setMode] = useState("view");
+
   /* ================= Fetch Employees ================= */
+  // console.log("employees", employees);
+
+  const fetchEmployees = async () => {
+    try {
+      setLoading(true);
+
+      const res = await getAllEmployeesApi();
+      setEmployees(res.data || []);
+    } catch (error) {
+      console.error("Error fetching employees:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        setLoading(true);
-
-        const cleanedFilters = {
-          ...Object.fromEntries(
-            Object.entries(filters).filter(([_, value]) => value !== ""),
-          ),
-          role: "employee",
-        };
-
-        const res = await getAllEmployeesApi(cleanedFilters);
-        setEmployees(res?.data);
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchEmployees();
-  }, [filters]);
+  }, []);
 
-  /* ================= Search Filter ================= */
+  /* ================= Delete Employee ================= */
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this employee?",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteEmployeeApi(id);
+
+      fetchEmployees();
+    } catch (error) {
+      console.error("Delete failed", error);
+    }
+  };
+
+  /* ================= Search ================= */
+
   const filteredEmployees = employees.filter((emp) =>
-    emp.name?.toLowerCase().includes(search.toLowerCase()),
+    emp.personal?.fullName?.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
     <div className="space-y-6 w-full">
+      {/* ================= Page Header ================= */}
+
       <EmployeeHeader />
+
+      {/* ================= Summary Cards ================= */}
+
       <EmployeeSummaryCard employees={employees} />
 
-      <div className="card bg-base-100 shadow border border-base-200">
-        
-        {/* ================= Header ================= */}
+      {/* ================= Employee Table Card ================= */}
+
+      <div className="card bg-base-100 shadow-xl border border-base-200">
+        {/* ================= Table Header ================= */}
+
         <div className="card-body border-b border-base-200 p-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <h2 className="font-semibold text-lg">Employees List</h2>
 
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full">
-
-              {/* Search */}
-              <input
-                type="text"
-                placeholder="Search by name"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="input input-bordered input-sm w-full sm:w-56"
-              />
-
-              {/* Status Dropdown */}
-              <select
-                className="select select-bordered select-sm w-full sm:w-40"
-                value={filters.status}
-                onChange={(e) =>
-                  setFilters({ ...filters, status: e.target.value })
-                }
-              >
-                <option value="">All Status</option>
-                <option value="approved">Approved</option>
-                <option value="pending">Pending</option>
-                <option value="rejected">Rejected</option>
-              </select>
-
-              {/* Active Dropdown */}
-              <select
-                className="select select-bordered select-sm w-full sm:w-40"
-                value={filters.active}
-                onChange={(e) =>
-                  setFilters({ ...filters, active: e.target.value })
-                }
-              >
-                <option value="">All</option>
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-              </select>
-
+              <p className="text-xs opacity-60">
+                Manage all employees in one place
+              </p>
             </div>
+
+            <input
+              type="text"
+              placeholder="Search employee..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="input input-bordered input-sm w-full md:w-60"
+            />
           </div>
         </div>
 
         {/* ================= Table ================= */}
+
         <div className="overflow-x-auto">
           {loading ? (
-            <div className="p-6 text-center text-sm opacity-60 flex items-center justify-center">
-              {/* <span className="loading loading-spinner loading-sm"></span> */}
-               <Loader/>
+            <div className="p-10 flex justify-center">
+              <Loader />
             </div>
           ) : filteredEmployees.length === 0 ? (
-            <div className="p-6 text-center text-sm opacity-60">
+            <div className="p-10 text-center text-sm opacity-60">
               No employees found
             </div>
           ) : (
-            <table className="table table-zebra table-sm">
-              <thead>
+            <table className="table table-zebra">
+              <thead className="bg-primary text-white">
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
+                  <th>Employee</th>
+                  <th>Employee ID</th>
                   <th>Contact</th>
-                  <th>Role</th>
                   <th>Department</th>
-                  <th>Status</th>
-                  <th>Active</th>
+                  <th>City</th>
+                  <th>DOJ</th>
+                  <th className="text-center">Actions</th>
                 </tr>
               </thead>
 
               <tbody>
                 {filteredEmployees.map((emp) => (
-                  <tr key={emp._id}>
-
-                    <td>{emp.name}</td>
-
-                    <td>{emp.email}</td>
-
-                    <td>{emp.contactNo}</td>
-
-                    <td className="capitalize">{emp.role}</td>
-
-                    <td>{emp.department || "-"}</td>
+                  <tr key={emp._id} className="hover">
+                    {/* ================= Employee Info ================= */}
 
                     <td>
-                      <span
-                        className={`badge badge-sm ${
-                          emp.status === "approved"
-                            ? "badge-success"
-                            : emp.status === "pending"
-                            ? "badge-warning"
-                            : "badge-error"
-                        }`}
-                      >
-                        {emp.status}
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="w-10 rounded-full">
+                            <img
+                              src={emp.personal?.profilePhoto}
+                              alt="profile"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="font-semibold">
+                            {emp.personal?.fullName}
+                          </div>
+
+                          <div className="text-xs opacity-60">
+                            {emp.account?.officialEmail}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* ================= Emp ID ================= */}
+
+                    <td>
+                      <span className=" ">
+                        {emp.professional?.employeeId || "-"}
                       </span>
                     </td>
 
+                    {/* ================= Contact ================= */}
+
                     <td>
-                      <span
-                        className={`badge badge-sm ${
-                          emp.isActive
-                            ? "badge-success"
-                            : "badge-error"
-                        }`}
-                      >
-                        {emp.isActive ? "Active" : "Inactive"}
+                      <span className="">
+                        {emp.contact?.primaryPhone || "-"}
                       </span>
                     </td>
 
+                    {/* ================= Department ================= */}
+
+                    <td>{emp.professional?.department || "-"}</td>
+
+                    {/* ================= City ================= */}
+
+                    <td>
+                      <span className="">
+                        {emp.address?.current?.city || "-"}
+                      </span>
+                    </td>
+
+                    {/* ================= DOJ ================= */}
+
+                    <td>
+                      {emp.professional?.dateOfJoining
+                        ? new Date(
+                            emp.professional.dateOfJoining,
+                          ).toLocaleDateString()
+                        : "-"}
+                    </td>
+
+                    {/* ================= Actions ================= */}
+
+                    <td>
+                      <div className="flex justify-center gap-2">
+                        <button
+                          className="btn btn-xs btn-info"
+                          onClick={() => {
+                            setSelectedEmployee(emp);
+                            setMode("view");
+                          }}
+                        >
+                          👁
+                        </button>
+
+                        <button
+                          className="btn btn-xs btn-warning"
+                          onClick={() => {
+                            setSelectedEmployee(emp);
+                            setMode("edit");
+                          }}
+                        >
+                          ✏
+                        </button>
+
+                        <button
+                          className="btn btn-xs btn-error"
+                          onClick={() => handleDelete(emp._id)}
+                        >
+                          🗑
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -170,11 +233,21 @@ console.log(employees.length)
         </div>
 
         {/* ================= Footer ================= */}
-        <div className="card-body border-t border-base-200 py-3 text-xs opacity-60">
-          {filteredEmployees.length} employees
-        </div>
 
+        <div className="card-body border-t border-base-200 py-3 text-xs opacity-70">
+          Showing {filteredEmployees.length} employees
+        </div>
       </div>
+
+      {/* ================= Modal ================= */}
+
+      {selectedEmployee && (
+        <EmployeeModal
+          employee={selectedEmployee}
+          mode={mode}
+          onClose={() => setSelectedEmployee(null)}
+        />
+      )}
     </div>
   );
 }

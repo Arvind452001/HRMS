@@ -1,19 +1,134 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export const getAllEmployee = async (data) => {
+/* ================= CREATE EMPLOYEE ================= */
+
+export const createEmployeeApi = async (formData) => {
   try {
-    const response = await axiosInstance.post("/auth/signup", data);
+
+    const response = await axiosInstance.post(
+      "/oldEmployees/create",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
     return response.data;
+
   } catch (err) {
-    throw err.response?.data || { success: false, message: err.message };
+
+    throw err.response?.data || {
+      success: false,
+      message: err.message,
+    };
+
   }
 };
 
-export const loginUser = async (data) => {
+
+/* ================= GET ALL EMPLOYEES ================= */
+
+export const getAllEmployeesApi = async (filters) => {
+
   try {
-    const response = await axiosInstance.post("/auth/login", data);
-    return response.data;
+
+    const response = await axiosInstance.get(
+      "/oldEmployees/getEmployees",
+      {
+        params: filters,
+      }
+    );
+// console.log("API response:", response.data);
+    return response;
+
   } catch (err) {
-    throw err.response?.data || { success: false, message: err.message };
+
+    throw err.response?.data || {
+      success: false,
+      message: err.message,
+    };
+
   }
+
+};
+
+
+/* ================= GET SINGLE EMPLOYEE ================= */
+
+export const getEmployeeByIdApi = async (id) => {
+
+  try {
+
+    const response = await axiosInstance.get(
+      `/oldEmployees/${id}`
+    );
+
+    return response.data.data;
+
+  } catch (err) {
+
+    throw err.response?.data || {
+      success: false,
+      message: err.message,
+    };
+
+  }
+
+};
+
+
+/* ================= UPDATE EMPLOYEE ================= */
+
+export const updateEmployeeApi = async (id, formData) => {
+console.log("Updating employee with ID:", id);
+console.log("Updating employee with formData:", formData);
+  try {
+
+    const response = await axiosInstance.patch(
+      `/oldEmployees/update/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+
+  } catch (err) {
+
+    throw err.response?.data || {
+      success: false,
+      message: err.message,
+    };
+
+  }
+
+};
+
+
+/* ================= DELETE EMPLOYEE ================= */
+
+export const deleteEmployeeApi = async (id) => {
+
+  try {
+
+    const response = await axiosInstance.delete(
+      `/oldEmployees/${id}`
+    );
+
+    return response.data;
+
+  } catch (err) {
+
+    throw err.response?.data || {
+      success: false,
+      message: err.message,
+    };
+
+  }
+
 };

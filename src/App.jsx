@@ -8,9 +8,9 @@ function App() {
   //   name: "Rahul Kumar",
   //   email: "rahul.employee@example.com",
   //   role: "hr", // Employee role
-  //   token: "dummy-jwt-token-employee",
+  //   technoToken: "dummy-jwt-token-employee",
   // };
-  // localStorage.setItem("user", JSON.stringify(dummyUser));
+  // localStorage.setItem("technoUser", JSON.stringify(dummyUser));
 
   return (
     <BrowserRouter>

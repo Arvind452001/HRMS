@@ -1,13 +1,8 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export const getAllEmployeesApi = async (filters) => {
-
+export const createEmployeeApi = async (data) => {
   try {
-    // console.log("responsedddddd")
-    const response = await axiosInstance.get("/admin/allEmployees", {
-      params: filters,
-    });
-// console.log("response",response.data.data)
+    const response = await axiosInstance.post("/auth/signup", data);
     return response.data;
   } catch (err) {
     throw err.response?.data || { success: false, message: err.message };

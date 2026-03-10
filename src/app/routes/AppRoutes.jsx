@@ -34,6 +34,9 @@ import AdminVisitorDetailsPage from "../pages/hr-pages/AdminVisitorDetailsPage";
 import PublicJobDetails from "../../pages/PublicJobDetails";
 import ApplyJob from "../../pages/ApplyJob";
 import ApplicationsPage from "../pages/hr-pages/ApplicationsPage";
+import AttendanceDetails from "../pages/hr-pages/AttendanceDetails";
+// import EmployeeForm from "../pages/hr-pages/oldEmployeeForm/EmployeeForm";
+import MainForm from "../pages/hr-pages/stepFormEmployee/MainForm";
 
 export default function AppRoutes() {
   return (
@@ -55,6 +58,7 @@ export default function AppRoutes() {
           <Route index element={<HrDashboard />} />
           <Route path="dashboard" element={<HrDashboard />} />
           <Route path="employees" element={<Employees />} />
+           <Route path="employees/add/" element={<MainForm />} />
           <Route path="VisitorsPage" element={<AdminVisitorsPage />} />
           <Route
             path="visitorDetails/:id"
@@ -64,6 +68,7 @@ export default function AppRoutes() {
           <Route path="Applications" element={<ApplicationsPage />} />
           <Route path="payroll" element={<Payroll />} />
           <Route path="attendance" element={<Attendance />} />
+          <Route path="attendanceDetails/:id" element={<AttendanceDetails />} />
           <Route path="performancee" element={<Performance />} />
           <Route path="leave" element={<LeaveManagement />} />
           <Route path="company-policy" element={<CompanyPolicy />} />

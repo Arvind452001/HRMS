@@ -39,8 +39,8 @@ export const getAllApplicationsApi = async ({
 
 export const updateApplicationStatusApi = async (id, data) => {
   try {
-    const response = await axiosInstance.put(
-      `/applications/updateStatus/${id}`,
+    const response = await axiosInstance.patch(
+      `/applications/updateStatus/${id}/status`,
       data
     );
 

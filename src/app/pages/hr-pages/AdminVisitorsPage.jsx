@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getALLVisitorApi } from "../../../api/visitor-Api";
-import { getAllEmployeesApi } from "../../../api/auth-Api";
 import { useNavigate } from "react-router-dom";
 import InterviewScheduleModal from './../../HR-component/model/InterviewScheduleModal';
 import Loader from "../../../components/Loader";
+import { getAllEmployeesApi } from "../../../api/employee-Api";
 
 export default function AdminVisitorsPage() {
   const [visitors, setVisitors] = useState([]);
@@ -40,7 +40,7 @@ export default function AdminVisitorsPage() {
     try {
       setEmployeesLoading(true);
       const res = await getAllEmployeesApi(cleanedFilters);
-      console.log("employees2",res)
+      // console.log("employees2",res)
       setEmployees(res.data || []);
     } catch (err) {
       setError("Failed to fetch employees");

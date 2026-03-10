@@ -20,7 +20,7 @@ export default function JobFormModal({
     type: "success",
     message: "",
   });
-  console.log(responseModal);
+  // console.log(responseModal);
   const [form, setForm] = useState({
     title: "",
     department: "Development",

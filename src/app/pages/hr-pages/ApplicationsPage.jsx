@@ -83,8 +83,8 @@ export default function ApplicationsPage() {
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
-          <option value="All">All</option>
-          <option value="Applied">Applied</option>
+          {/* <option value="All">All</option> */}
+          <option value="Applied">All Applications</option>
           <option value="Shortlisted">Shortlisted</option>
           <option value="Interview">Interview</option>
           <option value="Rejected">Rejected</option>

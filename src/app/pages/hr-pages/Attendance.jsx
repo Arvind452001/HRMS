@@ -6,11 +6,11 @@ import CompanyStatsCard from '../../HR-component/attendenceManegement/CompanySta
 const Attendance = () => {
   return (
     <div>
-      <div className='flex mb-4 gap-4 h-60'>
+      {/* <div className='flex mb-4 gap-4 h-60'>
         <CompanyStatsCard/>
         < EmployeesLeaveManagement/>
         
-      </div>
+      </div> */}
     
     <AttendanceLog/>
     </div>
