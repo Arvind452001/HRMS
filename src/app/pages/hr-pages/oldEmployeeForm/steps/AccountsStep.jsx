@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function AccountsStep({ register, setStep }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showSkypePassword, setShowSkypePassword] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   return (
     <div className="card bg-base-200 p-6">
@@ -16,7 +17,6 @@ export default function AccountsStep({ register, setStep }) {
             <span className="label-text">Official Email</span>
           </label>
           <input
-            id="officialEmail"
             className="input input-bordered"
             placeholder="Enter official email"
             {...register("accounts.officialEmail")}
@@ -30,7 +30,6 @@ export default function AccountsStep({ register, setStep }) {
           </label>
 
           <input
-            id="officialPassword"
             type={showPassword ? "text" : "password"}
             className="input input-bordered w-full"
             placeholder="Enter official email password"
@@ -52,7 +51,6 @@ export default function AccountsStep({ register, setStep }) {
             <span className="label-text">Skype / Teams ID</span>
           </label>
           <input
-            id="skypeId"
             className="input input-bordered"
             placeholder="Enter Skype or Teams ID"
             {...register("accounts.skypeId")}
@@ -66,7 +64,6 @@ export default function AccountsStep({ register, setStep }) {
           </label>
 
           <input
-            id="skypePassword"
             type={showSkypePassword ? "text" : "password"}
             className="input input-bordered w-full"
             placeholder="Enter Skype password"
@@ -88,11 +85,32 @@ export default function AccountsStep({ register, setStep }) {
             <span className="label-text">Personal Email</span>
           </label>
           <input
-            id="personalEmail"
             className="input input-bordered"
             placeholder="Enter personal email"
             {...register("accounts.personalEmail")}
           />
+        </div>
+
+        {/* ✅ LOGIN PASSWORD (NEW FIELD) */}
+        <div className="form-control md:col-span-2 relative">
+          <label className="label">
+            <span className="label-text">Login Password</span>
+          </label>
+
+          <input
+            type={showLoginPassword ? "text" : "password"}
+            className="input input-bordered w-full"
+            placeholder="Enter login password"
+            {...register("accounts.loginPassword")}  // ✅ FIXED
+          />
+
+          <button
+            type="button"
+            className="absolute right-3 top-[42px]"
+            onClick={() => setShowLoginPassword(!showLoginPassword)}
+          >
+            👁
+          </button>
         </div>
 
       </div>

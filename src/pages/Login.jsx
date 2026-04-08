@@ -39,14 +39,26 @@ const handleSubmit = async (e) => {
     // Save user
     localStorage.setItem("technoUser", JSON.stringify(res.user));
 
-   
     alert("Login successful");
 
-    // redirect
-    navigate("/hr");
+    const role = res.user?.role;
+
+    // ✅ ROLE BASED REDIRECT
+    if (role === "hr") {
+      navigate("/hr"); // HR dashboard
+    } else if (role === "employee") {
+      navigate("/employee"); // 👈 create this route
+    } else {
+      navigate("/"); // fallback
+    }
 
   } catch (err) {
-    alert(err.message || "Login failed");
+    const msg =
+      err.response?.data?.message ||
+      err.message ||
+      "Login failed";
+
+    alert(msg);
   }
 };
 

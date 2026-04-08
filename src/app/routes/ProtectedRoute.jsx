@@ -7,12 +7,15 @@ export default function ProtectedRoute({ allowed }) {
 // console.log("ProtectedRoute - Access Token:", accessToken);
   // not logged in
   if (!accessToken || !user) {
-    return <Navigate to="/login" replace />;
+   return <Navigate to="/visitorPage" replace />;
+    // return <Navigate to="/login" replace />;
+    
   }
 
   // role not allowed
   if (allowed && !allowed.includes(user.role)) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/visitorPage" replace />;
+    // return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;

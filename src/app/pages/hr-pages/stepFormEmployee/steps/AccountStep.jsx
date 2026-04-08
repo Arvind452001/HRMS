@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-export default function AccountStep() {
+export default function accountStep() {
   const { register } = useFormContext();
+
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -17,7 +19,7 @@ export default function AccountStep() {
           </label>
           <input
             type="email"
-            {...register("accounts.officialEmail")}
+            {...register("account.officialEmail")}
             className="input input-bordered w-full"
           />
         </div>
@@ -28,7 +30,7 @@ export default function AccountStep() {
           </label>
           <input
             type="password"
-            {...register("accounts.officialPassword")}
+            {...register("account.officialPassword")}
             className="input input-bordered w-full"
           />
         </div>
@@ -40,7 +42,7 @@ export default function AccountStep() {
           </label>
           <input
             type="text"
-            {...register("accounts.skypeId")}
+            {...register("account.skypeId")}
             className="input input-bordered w-full"
           />
         </div>
@@ -51,7 +53,7 @@ export default function AccountStep() {
           </label>
           <input
             type="password"
-            {...register("accounts.skypePassword")}
+            {...register("account.skypePassword")}
             className="input input-bordered w-full"
           />
         </div>
@@ -63,20 +65,31 @@ export default function AccountStep() {
           </label>
           <input
             type="email"
-            {...register("accounts.personalEmail")}
+            {...register("account.personalEmail")}
             className="input input-bordered w-full"
           />
         </div>
 
-        <div className="form-control">
+        {/* ✅ LOGIN PASSWORD */}
+        <div className="form-control relative">
           <label className="label">
-            <span className="label-text">Account Notes (Optional)</span>
+            <span className="label-text">Login Password</span>
           </label>
+
           <input
-            type="text"
-            {...register("accounts.notes")}
+            type={showLoginPassword ? "text" : "password"}
+            {...register("account.loginPassword")}
             className="input input-bordered w-full"
+            placeholder="Enter login password"
           />
+
+          <button
+            type="button"
+            className="absolute right-3 top-[42px]"
+            onClick={() => setShowLoginPassword(!showLoginPassword)}
+          >
+            👁
+          </button>
         </div>
 
       </div>

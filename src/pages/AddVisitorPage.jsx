@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { createVisitorApi } from "../api/auth-Api";
+import { FaLinkedin, FaInstagram, FaFacebook } from "react-icons/fa";
 import {
   experienceOptions,
   interviewDomains,
   jobSourceOptions,
 } from "../data/Dummy-Data";
+import { FcGoogle } from "react-icons/fc";
 
 export default function AddVisitorPage() {
   const initialState = {
@@ -26,6 +28,7 @@ export default function AddVisitorPage() {
     expectedCtc: "",
     currentOrganization: "",
     jobSource: "",
+    acknowledge: false, // ✅ NEW
   };
 
   const [form, setForm] = useState(initialState);
@@ -37,6 +40,12 @@ export default function AddVisitorPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.acknowledge) {
+      alert("Please accept the acknowledgement before submitting");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -114,13 +123,13 @@ export default function AddVisitorPage() {
                 <option value="enquiry">Enquiry</option>
                 <option value="training">Training</option>
                 <option value="interview">Interview</option>
-                <option value="candidate">Candidate</option>
+                {/* <option value="candidate">Candidate</option> */}
                 <option value="client">Client</option>
               </select>
             </div>
 
             {/* Candidate Technology */}
-            {form.type === "candidate" && (
+            {form.type === "training" && (
               <div>
                 <label className="label">Technology</label>
                 <select
@@ -270,14 +279,14 @@ export default function AddVisitorPage() {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className="label">Purpose of Visit</label>
               <input
                 className="input input-bordered w-full"
                 value={form.purposeOfVisit}
                 onChange={(e) => update("purposeOfVisit", e.target.value)}
               />
-            </div>
+            </div> */}
 
             <div>
               <label className="label">Person To Meet</label>
@@ -328,8 +337,61 @@ export default function AddVisitorPage() {
               />
             </div>
 
+            {/* Follow Us */}
+            <div className="divider">Follow Us</div>
+            <div className="flex justify-center gap-6 text-2xl mt-4">
+              <a
+                href="https://in.linkedin.com/company/technorizen-software-solutions-pvt-ltd"
+                target="_blank"
+                className="text-blue-700"
+              >
+                <FaLinkedin />
+              </a>
+
+              <a
+                href="https://www.instagram.com/technorizen_software_solutions"
+                target="_blank"
+                className="text-pink-600"
+              >
+                <FaInstagram />
+              </a>
+
+              <a
+                href="https://www.facebook.com/technorizen/"
+                target="_blank"
+                className="text-blue-600"
+              >
+                <FaFacebook />
+              </a>
+              <a
+                href="https://accounts.google.com"
+                target="_blank"
+                className="text-blue-600"
+              >
+                <FcGoogle />
+              </a>
+            </div>
+
+            {/* Acknowledgement */}
+           <div className="md:col-span-2 flex items-center justify-center gap-2 mt-2">
+  <input
+    type="checkbox"
+    className="checkbox checkbox-primary"
+    checked={form.acknowledge}
+    onChange={(e) => update("acknowledge", e.target.checked)}
+  />
+  <label className="text-sm">
+    I acknowledge that the information provided is correct and I agree to proceed.
+  </label>
+</div>
+
+            {/* Submit Button */}
             <div className="md:col-span-2 flex justify-center">
-              <button className={`btn btn-primary w-40 `} type="submit">
+              <button
+                className="btn btn-primary w-40"
+                type="submit"
+                disabled={loading || !form.acknowledge}
+              >
                 {loading ? "Saving..." : "Submit"}
               </button>
             </div>

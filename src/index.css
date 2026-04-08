@@ -24,4 +24,6 @@
   resize-none;
 }
 
-
+.radial-progress {
+  --track: #e5e7eb;
+}

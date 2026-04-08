@@ -79,21 +79,23 @@ const defaultValues = {
     employmentType: "",
     status: "Active",
     dateOfJoining: "",
+    WeekOff: "FIRST_THIRD",
   },
   account: {
-    officialEmail: "",
-    officialPassword: "",
-    skypeId: "",
-    skypePassword: "",
-    personalEmail: "",
-    notes: "",
-  },
-  bank: {
-    bankName: "",
-    accountNumber: "",
-    ifscCode: "",
-    branch: "",
-  },
+  officialEmail: "",
+  officialPassword: "",
+  skypeId: "",
+  skypePassword: "",
+  personalEmail: "",
+  loginPassword: "", // ✅ NEW
+},
+bank: {
+  accountHolderName: "", // ✅ NEW
+  bankName: "",
+  accountNumber: "",
+  ifscCode: "",
+  branch: "",
+},
   documents: {
     aadharCard: null,
     panCard: null,
@@ -109,6 +111,7 @@ export default function MainForm() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("success");
   const [modalMessage, setModalMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const methods = useForm({
@@ -141,50 +144,55 @@ export default function MainForm() {
 
   /* ---------------- BUILD FORMDATA ---------------- */
 
-  const appendFormData = (formData, data, parentKey = "") => {
-    Object.keys(data).forEach((key) => {
-      const value = data[key];
-      const formKey = parentKey ? `${parentKey}[${key}]` : key;
+ const appendFormData = (formData, data, parentKey = "") => {
+  Object.keys(data).forEach((key) => {
+    const value = data[key];
+    const formKey = parentKey ? `${parentKey}[${key}]` : key;
 
-      if (value instanceof FileList) {
-        formData.append(formKey, value[0]);
-      } else if (value instanceof File) {
-        formData.append(formKey, value);
-      } else if (typeof value === "object" && value !== null) {
-        appendFormData(formData, value, formKey);
-      } else {
-        formData.append(formKey, value ?? "");
-      }
-    });
-  };
+    if (value instanceof FileList && value.length > 0) {
+      formData.append(formKey, value[0]);
+    } else if (value instanceof File) {
+      formData.append(formKey, value);
+    } else if (typeof value === "object" && value !== null) {
+      appendFormData(formData, value, formKey);
+    } else if (value !== undefined && value !== null) {
+      formData.append(formKey, value);
+    }
+  });
+};
 
   /* ---------------- SUBMIT ---------------- */
 
-  const onSubmit = async (data) => {
-    try {
-      if (data.professional?.manager === "") {
-        delete data.professional.manager;
-      }
+const onSubmit = async (data) => {
+  if (isSubmitting) return; // 🔥 double click prevent
 
-      const formData = new FormData();
+  setIsSubmitting(true); // button disable + loading start
 
-      appendFormData(formData, data);
-
-      const result = await createEmployeeApi(formData);
-
-      console.log("API response:", result);
-
-      setModalType("success");
-      setModalMessage(result.message || "Employee created successfully!");
-      setModalOpen(true);
-    } catch (err) {
-      console.error(err);
-
-      setModalType("error");
-      setModalMessage(err.message || "Failed to create employee");
-      setModalOpen(true);
+  try {
+    if (data.professional?.manager === "") {
+      delete data.professional.manager;
     }
-  };
+
+    const formData = new FormData();
+    appendFormData(formData, data);
+
+    const result = await createEmployeeApi(formData);
+
+    console.log("API response:", result);
+
+    setModalType("success");
+    setModalMessage(result.message || "Employee created successfully!");
+    setModalOpen(true);
+  } catch (err) {
+    console.error(err);
+
+    setModalType("error");
+    setModalMessage(err.message || "Failed to create employee");
+    setModalOpen(true);
+  } finally {
+    setIsSubmitting(false); // 🔥 important (agar redirect nahi kar rahe)
+  }
+};
 
   const StepComponent = [
     PersonalStep,
@@ -253,8 +261,12 @@ export default function MainForm() {
                       Next
                     </button>
                   ) : (
-                    <button type="submit" className="btn btn-success">
-                      Submit
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Submitting..." : "Submit"}
                     </button>
                   )}
                 </div>

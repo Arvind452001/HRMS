@@ -84,15 +84,15 @@ export default function EmployeeSummaryCard({ employees }) {
           <div className="grid grid-cols-3 gap-3 text-center md:text-left">
             <div>
               <p className="text-xs opacity-60">New Employees</p>
-              <p className="text-lg font-semibold">125</p>
+              <p className="text-lg font-semibold">12</p>
             </div>
             <div>
               <p className="text-xs opacity-60">Departments</p>
-              <p className="text-lg font-semibold">11</p>
+              <p className="text-lg font-semibold">3</p>
             </div>
             <div>
               <p className="text-xs opacity-60">On Leave</p>
-              <p className="text-lg font-semibold text-warning">70</p>
+              <p className="text-lg font-semibold text-warning">7</p>
             </div>
           </div>
 

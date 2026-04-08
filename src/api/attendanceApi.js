@@ -5,7 +5,7 @@ import axiosInstance from "../utils/axiosInstance";
 export const checkInApi = async (data) => {
   try {
     const response = await axiosInstance.post(
-      `/attendance/check-in`,
+      `/employees/check-in`,
       data
     );
 
@@ -21,7 +21,7 @@ export const checkInApi = async (data) => {
 export const checkOutApi = async (data) => {
   try {
     const response = await axiosInstance.post(
-      `/attendance/check-out`,
+      `/employees/check-out`,
       data
     );
 

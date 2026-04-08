@@ -11,7 +11,6 @@ import EmployeeLayout from "../layouts/EmployeeLayout";
 import HrDashboard from "../pages/hr-pages/HrDashboard";
 import Employees from "../pages/hr-pages/Employees";
 import Jobs from "../pages/hr-pages/Jobs";
-import Payroll from "../pages/hr-pages/Payroll";
 import Attendance from "../pages/hr-pages/Attendance";
 import Performance from "../pages/hr-pages/Performance";
 import LeaveManagement from "../pages/hr-pages/LeaveManagement";
@@ -35,8 +34,9 @@ import PublicJobDetails from "../../pages/PublicJobDetails";
 import ApplyJob from "../../pages/ApplyJob";
 import ApplicationsPage from "../pages/hr-pages/ApplicationsPage";
 import AttendanceDetails from "../pages/hr-pages/AttendanceDetails";
-// import EmployeeForm from "../pages/hr-pages/oldEmployeeForm/EmployeeForm";
 import MainForm from "../pages/hr-pages/stepFormEmployee/MainForm";
+import SalaryDashboard from "../pages/hr-pages/Salary/SalaryDashboard";
+import Payroll from "../pages/hr-pages/Salary/Payroll";
 
 export default function AppRoutes() {
   return (
@@ -46,10 +46,11 @@ export default function AppRoutes() {
 
       {/* ===== PUBLIC ROUTES ===== */}
       <Route element={<PublicRoute />}>
-        <Route path="/login" element={<Login />} />
         <Route path="/visitorPage" element={<AddVisitorPage />} />
-       <Route path="/jobs/:slug" element={<PublicJobDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/jobs/:slug" element={<PublicJobDetails />} />
         <Route path="/apply/:slug" element={<ApplyJob />} />
+         {/* <Route path="/employees/add" element={<MainForm />} /> */}
       </Route>
 
       {/* ===== HR PROTECTED ROUTES ===== */}
@@ -58,7 +59,7 @@ export default function AppRoutes() {
           <Route index element={<HrDashboard />} />
           <Route path="dashboard" element={<HrDashboard />} />
           <Route path="employees" element={<Employees />} />
-           <Route path="employees/add/" element={<MainForm />} />
+          <Route path="employees/add/" element={<MainForm />} />
           <Route path="VisitorsPage" element={<AdminVisitorsPage />} />
           <Route
             path="visitorDetails/:id"
@@ -66,6 +67,8 @@ export default function AppRoutes() {
           />
           <Route path="job-post" element={<Jobs />} />
           <Route path="Applications" element={<ApplicationsPage />} />
+          <Route path="salary" element={<SalaryDashboard />} />
+            
           <Route path="payroll" element={<Payroll />} />
           <Route path="attendance" element={<Attendance />} />
           <Route path="attendanceDetails/:id" element={<AttendanceDetails />} />

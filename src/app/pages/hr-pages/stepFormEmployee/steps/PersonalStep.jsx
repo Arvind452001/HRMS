@@ -1,8 +1,11 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import React from "react";
+import { useFormContext } from "react-hook-form";
 
 export default function PersonalStep() {
-  const { register, formState: { errors } } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="space-y-4">
@@ -15,11 +18,15 @@ export default function PersonalStep() {
           </label>
           <input
             type="text"
-            {...register('personal.fullName', { required: 'Full name is required' })}
+            {...register("personal.fullName", {
+              required: "Full name is required",
+            })}
             className="input input-bordered w-full"
           />
           {errors.personal?.fullName && (
-            <span className="text-error text-sm mt-1">{errors.personal.fullName.message}</span>
+            <span className="text-error text-sm mt-1">
+              {errors.personal.fullName.message}
+            </span>
           )}
         </div>
 
@@ -29,7 +36,7 @@ export default function PersonalStep() {
           </label>
           <input
             type="text"
-            {...register('personal.fatherName')}
+            {...register("personal.fatherName")}
             className="input input-bordered w-full"
           />
         </div>
@@ -40,7 +47,7 @@ export default function PersonalStep() {
           </label>
           <input
             type="text"
-            {...register('personal.motherName')}
+            {...register("personal.motherName")}
             className="input input-bordered w-full"
           />
         </div>
@@ -49,7 +56,10 @@ export default function PersonalStep() {
           <label className="label">
             <span className="label-text">Gender</span>
           </label>
-          <select {...register('personal.gender')} className="select select-bordered w-full">
+          <select
+            {...register("personal.gender")}
+            className="select select-bordered w-full"
+          >
             <option value="">Select</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -61,7 +71,10 @@ export default function PersonalStep() {
           <label className="label">
             <span className="label-text">Marital Status</span>
           </label>
-          <select {...register('personal.maritalStatus')} className="select select-bordered w-full">
+          <select
+            {...register("personal.maritalStatus")}
+            className="select select-bordered w-full"
+          >
             <option value="">Select</option>
             <option value="Single">Single</option>
             <option value="Married">Married</option>
@@ -76,7 +89,7 @@ export default function PersonalStep() {
           </label>
           <input
             type="date"
-            {...register('personal.dob')}
+            {...register("personal.dob")}
             className="input input-bordered w-full"
           />
         </div>
@@ -87,7 +100,7 @@ export default function PersonalStep() {
           </label>
           <input
             type="text"
-            {...register('personal.nationality')}
+            {...register("personal.nationality")}
             className="input input-bordered w-full"
           />
         </div>
@@ -98,7 +111,7 @@ export default function PersonalStep() {
           </label>
           <input
             type="text"
-            {...register('personal.bloodGroup')}
+            {...register("personal.bloodGroup")}
             className="input input-bordered w-full"
           />
         </div>
@@ -112,8 +125,9 @@ export default function PersonalStep() {
         <input
           type="file"
           accept="image/*"
+          {...register("personal.profilePhoto")}
+          name="personal[profilePhoto]" // ✅ MUST
           className="file-input file-input-bordered w-full"
-          {...register('personal.profilePhoto')}
         />
       </div>
     </div>

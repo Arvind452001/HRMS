@@ -9,6 +9,21 @@ export default function BankStep() {
       <h2 className="text-2xl font-bold">Bank Details</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        {/* ✅ Account Holder Name */}
+        <div className="form-control md:col-span-2">
+          <label className="label">
+            <span className="label-text">Account Holder Name</span>
+          </label>
+          <input
+            type="text"
+            {...register('bank.accountHolderName')}
+            className="input input-bordered w-full"
+            placeholder="Enter account holder name"
+          />
+        </div>
+
+        {/* Bank Name */}
         <div className="form-control md:col-span-2">
           <label className="label">
             <span className="label-text">Bank Name</span>
@@ -20,6 +35,7 @@ export default function BankStep() {
           />
         </div>
 
+        {/* Account Number */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Account Number</span>
@@ -31,6 +47,7 @@ export default function BankStep() {
           />
         </div>
 
+        {/* IFSC Code */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">IFSC Code</span>
@@ -42,6 +59,7 @@ export default function BankStep() {
           />
         </div>
 
+        {/* Branch */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Branch</span>
@@ -52,6 +70,7 @@ export default function BankStep() {
             className="input input-bordered w-full"
           />
         </div>
+
       </div>
     </div>
   );

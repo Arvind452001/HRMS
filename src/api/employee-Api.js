@@ -27,9 +27,32 @@ export const createEmployeeApi = async (formData) => {
   }
 };
 
-
 /* ================= GET ALL EMPLOYEES ================= */
+export const getEmployeesApi = async (filters) => {
 
+  try {
+
+    const response = await axiosInstance.get(
+      "/oldEmployees/getEmployees",
+      {
+        params: filters,
+      }
+    );
+// console.log("API response:", response.data);
+    return response;
+
+  } catch (err) {
+
+    throw err.response?.data || {
+      success: false,
+      message: err.message,
+    };
+
+  }
+
+};
+
+/* ================= GET ALL EMPLOYEES OLD+NEW ================= */
 export const getAllEmployeesApi = async (filters) => {
 
   try {
@@ -110,25 +133,3 @@ console.log("Updating employee with formData:", formData);
 };
 
 
-/* ================= DELETE EMPLOYEE ================= */
-
-export const deleteEmployeeApi = async (id) => {
-
-  try {
-
-    const response = await axiosInstance.delete(
-      `/oldEmployees/${id}`
-    );
-
-    return response.data;
-
-  } catch (err) {
-
-    throw err.response?.data || {
-      success: false,
-      message: err.message,
-    };
-
-  }
-
-};

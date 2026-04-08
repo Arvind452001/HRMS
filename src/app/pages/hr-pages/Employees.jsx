@@ -8,8 +8,7 @@ import EmployeeModal from "../../HR-component/employee-components/EmployeeModal"
 import Loader from "../../../components/Loader";
 
 import {
-  deleteEmployeeApi,
-  getAllEmployeesApi,
+ getEmployeesApi,
 } from "../../../api/employee-Api";
 
 export default function Employees() {
@@ -30,7 +29,7 @@ export default function Employees() {
     try {
       setLoading(true);
 
-      const res = await getAllEmployeesApi();
+      const res = await getEmployeesApi();
       setEmployees(res.data || []);
     } catch (error) {
       console.error("Error fetching employees:", error);
@@ -42,24 +41,6 @@ export default function Employees() {
   useEffect(() => {
     fetchEmployees();
   }, []);
-
-  /* ================= Delete Employee ================= */
-
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this employee?",
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await deleteEmployeeApi(id);
-
-      fetchEmployees();
-    } catch (error) {
-      console.error("Delete failed", error);
-    }
-  };
 
   /* ================= Search ================= */
 
@@ -215,13 +196,6 @@ export default function Employees() {
                           }}
                         >
                           ✏
-                        </button>
-
-                        <button
-                          className="btn btn-xs btn-error"
-                          onClick={() => handleDelete(emp._id)}
-                        >
-                          🗑
                         </button>
                       </div>
                     </td>

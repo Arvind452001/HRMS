@@ -1,9 +1,22 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from ".././assets/logo.jpg";
 import { Headphones, LogOut } from "lucide-react";
 import { menu } from "../data/Dummy-Data";
 
 export default function Sidebar({ role, sidebarOpen }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // ✅ token remove
+    localStorage.removeItem("technoToken");
+
+    // optional: aur data bhi clear karo
+    localStorage.removeItem("technoUser");
+
+    // ✅ redirect to login
+    navigate("/login");
+  };
+
   return (
     <div
       className={`fixed top-0 left-0 h-screen w-68 bg-base-100 border-r border-base-300 flex flex-col justify-between px-4 py-2 transition-transform duration-300 z-40 ${
@@ -61,7 +74,10 @@ export default function Sidebar({ role, sidebarOpen }) {
           Contact Support
         </NavLink>
 
-        <button className="flex items-center gap-3 px-3 py-2 text-error hover:bg-base-200 rounded-lg transition">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-3 py-2 rounded-lg transition text-error hover:bg-blue-500 hover:text-white"
+        >
           <LogOut size={18} />
           Logout
         </button>
