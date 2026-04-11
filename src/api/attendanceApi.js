@@ -33,7 +33,25 @@ export const checkOutApi = async (data) => {
 
 
 /* ================= Get All Attendance ================= */
+export const getAllAttendanceApi = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `/employees/attendance/my`
+    );
 
+    return response.data;
+
+  } catch (err) {
+    throw (
+      err.response?.data || {
+        success: false,
+        message: err.message,
+      }
+    );
+  }
+};
+
+/* ================= Get All Attendance ================= */
 export const getTodayAttendanceApi = async () => {
   try {
     const response = await axiosInstance.get(

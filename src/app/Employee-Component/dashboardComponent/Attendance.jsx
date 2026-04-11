@@ -1,192 +1,198 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { checkInApi, checkOutApi } from "../../../api/attendanceApi";
+import { CircularTimer } from "./CircularTimer";
 
 export default function Attendance() {
   const [checkedIn, setCheckedIn] = useState(false);
-  const [time, setTime] = useState("");
+  const [timer, setTimer] = useState(0); // seconds
+  const [checkInTime, setCheckInTime] = useState(null);
+  const [totalTime, setTotalTime] = useState(0);
 
-  // ⏱ Live Time
+  const currentUser = JSON.parse(localStorage.getItem("technoUser"));
+  console.log("currentUser", currentUser);
+
+  // 🔥 Load from localStorage (refresh support)
   useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      setTime(
-        now.toLocaleTimeString("en-IN", {
-          hour12: false,
-        })
-      );
-    }, 1000);
+    const savedTime = localStorage.getItem("checkInTime");
 
-    return () => clearInterval(timer);
+    if (savedTime) {
+      setCheckedIn(true);
+      setCheckInTime(Number(savedTime));
+    }
   }, []);
 
-  // 🔥 HANDLE CHECK-IN
-  const handleCheckIn = async () => {
-    const confirm = await Swal.fire({
-      title: "Check In?",
-      text: "Are you sure you want to check in?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Yes",
-    });
+  // 🔥 Timer Logic
+  useEffect(() => {
+    let interval;
 
-    if (!confirm.isConfirmed) return;
-
-    try {
-      const res = await checkInApi({
-        time: new Date(),
-      });
-
-      setCheckedIn(true);
-
-      await Swal.fire({
-        icon: "success",
-        title: "Checked In Successfully",
-        text: res?.message || "Welcome!",
-      });
-    } catch (err) {
-      await Swal.fire({
-        icon: "error",
-        title: "Check In Failed",
-        text: err?.message || "Something went wrong",
-      });
+    if (checkedIn && checkInTime) {
+      interval = setInterval(() => {
+        const diff = Math.floor((Date.now() - checkInTime) / 1000);
+        setTimer(diff);
+      }, 1000);
     }
+
+    return () => clearInterval(interval);
+  }, [checkedIn, checkInTime]);
+
+  // 🔥 Format Time
+  const formatTime = (seconds) => {
+    const h = String(Math.floor(seconds / 3600)).padStart(2, "0");
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+    const s = String(seconds % 60).padStart(2, "0");
+    return `${h}:${m}:${s}`;
   };
 
-  // 🔥 HANDLE CHECK-OUT
-  const handleCheckOut = async () => {
-    const confirm = await Swal.fire({
-      title: "Check Out?",
-      text: "Are you sure you want to check out?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes",
+// 🔥 CHECK-IN
+const handleCheckIn = async () => {
+  const confirm = await Swal.fire({
+    title: "Check In?",
+    icon: "question",
+    showCancelButton: true,
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  try {
+    const now = new Date();
+
+    const res = await checkInApi({
+      checkInTime: now.toISOString(), // ✅ UTC भेजा
     });
 
-    if (!confirm.isConfirmed) return;
+    const localTime = now.getTime();
 
-    try {
-      const res = await checkOutApi({
-        time: new Date(),
-      });
+    setCheckedIn(true);
+    setCheckInTime(localTime);
+    setTimer(0);
 
-      setCheckedIn(false);
+    localStorage.setItem("checkInTime", localTime);
 
-      await Swal.fire({
-        icon: "success",
-        title: "Checked Out Successfully",
-        text: res?.message || "Goodbye!",
-      });
-    } catch (err) {
-      await Swal.fire({
-        icon: "error",
-        title: "Check Out Failed",
-        text: err?.message || "Something went wrong",
-      });
-    }
-  };
+    Swal.fire("Checked In!", res?.message || "Success", "success");
+  } catch (err) {
+    Swal.fire("Error", err?.message || "Failed", "error");
+  }
+};
+
+// 🔥 CHECK-OUT
+const handleCheckOut = async () => {
+  const confirm = await Swal.fire({
+    title: "Check Out?",
+    icon: "warning",
+    showCancelButton: true,
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  try {
+    const now = new Date();
+
+    const res = await checkOutApi({
+      checkOutTime: now.toISOString(), // ✅ UTC भेजा
+    });
+
+    setCheckedIn(false);
+    setTotalTime(timer);
+
+    localStorage.removeItem("checkInTime");
+
+    Swal.fire("Checked Out!", res?.message || "Done", "success");
+  } catch (err) {
+    Swal.fire("Error", err?.message || "Failed", "error");
+  }
+};
 
   return (
-    <div className="p-0 max-w-6xl mx-auto">
-
+    <div className="p-4 max-w-5xl mx-auto">
       {/* HEADER */}
-      <div className="bg-gradient-to-r from-green-700 to-green-500 text-white rounded-xl p-4 flex justify-between items-center">
-        {/* <div className="flex items-center gap-3">
-          <div className="avatar">
-            <div className="w-12 rounded-full">
-              <img src="https://i.pravatar.cc/100" />
-            </div>
-          </div>
+    <div className="bg-gradient-to-r from-green-600 to-green-400 text-white rounded-xl p-4 flex justify-between items-center">
 
-          <div>
-            <h2 className="font-semibold">Grayson</h2>
-            <p className="text-sm opacity-80">Full Stack Developer</p>
-          </div>
-        </div> */}
+  {/* LEFT */}
+  <h2 className="font-semibold text-lg">
+    Attendance Dashboard
+  </h2>
 
-        <button className="btn btn-circle btn-ghost">🔔</button>
-      </div>
+  {/* RIGHT */}
+  <div className="text-right">
 
-      {/* HOLIDAY */}
-      <div className="card bg-base-100 shadow mt-4">
-        <div className="card-body flex flex-row items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500">Apr 18, 2025</p>
-            <h3 className="font-semibold">Good Friday</h3>
-          </div>
+    <div className="text-sm">
+      <span className="opacity-80">Name - </span>
+      <span className="font-semibold text-base">
+        {currentUser?.name}
+      </span>
+    </div>
 
-          <div className="badge badge-warning">
-            Public Holiday
-          </div>
-        </div>
-      </div>
+    <div className="text-sm mt-1">
+      <span className="opacity-80">Emp ID - </span>
+      <span className="font-semibold text-base">
+        {currentUser?.employeeId}
+      </span>
+    </div>
+
+  </div>
+</div>
 
       {/* MAIN */}
-      <div className="grid lg:grid-cols-2 gap-4 mt-4">
-
-        {/* LEFT */}
-        <div className="card bg-base-100 shadow">
+      <div className="grid md:grid-cols-2 gap-4 mt-4 ">
+        {/* TIMER CARD */}
+        <div className="card bg-green-100 shadow">
           <div className="card-body text-center">
+            <h2 className="text-lg font-semibold">Working Time</h2>
 
-            <h2 className="text-lg font-semibold">
-              Working Hours
-            </h2>
-
-            <div
-              className="radial-progress text-blue-500 my-4"
+            {/* <div
+              className="radial-progress text-primary my-4"
               style={{
-                "--value": 75,
+                "--value": checkedIn ? 70 : 0,
                 "--size": "12rem",
                 "--thickness": "12px",
-                "--track": "#e5e7eb"
               }}
             >
-              {time}
+              {checkedIn ? formatTime(timer) : formatTime(totalTime)}
+            </div> */}
+            <CircularTimer seconds={checkedIn ? timer : totalTime} />
+            <div className="text-sm text-gray-500">
+              {checkedIn
+                ? "Timer running..."
+                : totalTime > 0
+                  ? "Session completed"
+                  : "Not checked in"}
             </div>
-
-            <div className="flex justify-between text-sm mt-4">
-              <div>
-                <p className="text-gray-500">Clock In</p>
-                <p className="font-semibold">09:00 AM</p>
-              </div>
-
-              <div>
-                <p className="text-gray-500">Clock Out</p>
-                <p className="font-semibold">06:20 PM</p>
-              </div>
-            </div>
-
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* ACTION CARD */}
         <div className="card bg-base-100 shadow">
           <div className="card-body flex flex-col justify-center items-center gap-4">
-
             {!checkedIn ? (
               <button
                 className="btn btn-success w-full"
                 onClick={handleCheckIn}
               >
-                Check In
+                ✅ Check In
               </button>
             ) : (
-              <button
-                className="btn btn-error w-full"
-                onClick={handleCheckOut}
-              >
-                Check Out
+              <button className="btn btn-error w-full" onClick={handleCheckOut}>
+                ❌ Check Out
               </button>
             )}
 
-            <button className="btn btn-outline w-full">
-              View Attendance
-            </button>
-
+            <button className="btn btn-outline w-full">View Attendance</button>
           </div>
         </div>
-
       </div>
+
+      {/* TOTAL TIME CARD */}
+      {totalTime > 0 && (
+        <div className="card bg-base-100 shadow mt-4">
+          <div className="card-body text-center">
+            <h3 className="text-md font-semibold">Today's Work</h3>
+            <p className="text-xl font-bold text-green-600">
+              {formatTime(totalTime)}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
