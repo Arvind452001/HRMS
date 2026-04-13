@@ -29,22 +29,22 @@ export default function EmployeeSalaryTable() {
                 className="btn btn-accent btn-sm"
                 onClick={() => openModal("setup")}
               >
-                Setup employee salary
+                Add employee salary
               </button>
 
-              <button
+              {/* <button
                 className="btn btn-success btn-sm mx-2"
                 onClick={() => openModal("payroll")}
               >
                 Generate monthly payroll
-              </button>
+              </button> */}
 
-              <button
+              {/* <button
                 className="btn btn-info btn-sm"
                 onClick={() => openModal("payslip")}
               >
                 Download employee payslips
-              </button>
+              </button> */}
 
             </div>
           </div>

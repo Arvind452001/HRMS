@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../api/auth-Api";
+import axiosInstance from "../utils/axiosInstance";
+import Loader from "../components/Loader";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // 🔥 main loader
+  const [forgotLoading, setForgotLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,43 +30,71 @@ const Login = () => {
     return newErrors;
   };
 
+  // 🔥 LOGIN
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const res = await loginApi(formData);
-
-    // Save token
-    localStorage.setItem("technoToken", res.accessToken);
-
-    // Save user
-    localStorage.setItem("technoUser", JSON.stringify(res.user));
-
-    alert("Login successful");
-
-    const role = res.user?.role;
-
-    // ✅ ROLE BASED REDIRECT
-    if (role === "hr") {
-      navigate("/hr"); // HR dashboard
-    } else if (role === "employee") {
-      navigate("/employee"); // 👈 create this route
-    } else {
-      navigate("/"); // fallback
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
     }
 
-  } catch (err) {
-    const msg =
-      err.response?.data?.message ||
-      err.message ||
-      "Login failed";
+    try {
+      setLoading(true);
 
-    alert(msg);
+      const res = await loginApi(formData);
+
+      localStorage.setItem("technoToken", res.accessToken);
+      localStorage.setItem("technoUser", JSON.stringify(res.user));
+
+      alert("Login successful ✅");
+
+      const role = res.user?.role;
+
+      if (role === "hr") navigate("/hr");
+      else if (role === "employee") navigate("/employee");
+      else navigate("/");
+    } catch (err) {
+      alert(
+        err.response?.data?.message ||
+          err.message ||
+          "Login failed ❌"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🔥 FORGOT PASSWORD
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      return alert("Please enter email first ⚠️");
+    }
+
+    try {
+      setForgotLoading(true);
+
+      await axiosInstance.post("/auth/forgot-password", {
+        email: formData.email,
+      });
+
+      alert("Reset link sent to your email 📩");
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed ❌");
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  // 🔥 FULL SCREEN LOADER
+  if (loading || forgotLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-200">
+        <Loader />
+      </div>
+    );
   }
-};
-
 
   return (
     <div
@@ -70,23 +103,21 @@ const handleSubmit = async (e) => {
         backgroundImage: "url('/src/assets/bg-2.png')",
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/50" />
 
-      {/* Glass Card */}
       <div className="relative w-full max-w-md bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+
         <h2 className="text-sm text-gray-200">Welcome to</h2>
         <h1 className="text-2xl text-gray-200 font-semibold mb-6">HRMS</h1>
 
-        {/* Single Tab */}
         <div className="mb-6">
-          <div className="w-full py-2 rounded-md bg-gradient-to-r from-blue-500 to-blue-800 text-white font-medium text-center">
+          <div className="w-full py-2 rounded-md bg-gradient-to-r from-blue-500 to-blue-800 text-center">
             Log In Page
           </div>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+
           {/* Email */}
           <div>
             <input
@@ -95,7 +126,7 @@ const handleSubmit = async (e) => {
               placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
-              className="w-full bg-transparent border border-white/50 rounded-md px-4 py-3 text-white placeholder:text-gray-200 focus:outline-none focus:border-blue-400"
+              className="w-full bg-transparent border border-white/50 rounded-md px-4 py-3 text-white"
             />
             {errors.email && (
               <p className="text-red-300 text-sm mt-1">{errors.email}</p>
@@ -110,52 +141,41 @@ const handleSubmit = async (e) => {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full bg-transparent border border-white/50 rounded-md px-4 py-3 text-white placeholder:text-gray-200 focus:outline-none focus:border-blue-400"
+              className="w-full bg-transparent border border-white/50 rounded-md px-4 py-3 text-white"
             />
             {errors.password && (
               <p className="text-red-300 text-sm mt-1">{errors.password}</p>
             )}
           </div>
 
+          {/* Forgot */}
           <div className="text-right">
             <button
               type="button"
-              className="text-sm text-gray-200 hover:text-white"
+              onClick={handleForgotPassword}
+              className="text-sm text-gray-200 hover:text-blue-400"
             >
-              Forget Password
+              Forgot Password?
             </button>
           </div>
 
-          {/* Submit */}
+          {/* Login */}
           <button
             type="submit"
-            className="block w-[30%] mx-auto py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-900 font-semibold text-white hover:opacity-90 transition"
+            className="block w-full py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-900 font-semibold text-white"
           >
             Log In
           </button>
         </form>
 
-        <div className="mt-8 text-center space-y-3">
-  <p className="text-sm text-gray-200">Continue without logging in</p>
-
-  <div className="flex justify-center gap-6">
-    <button
-      type="button"
-      onClick={() => navigate("/visitorPage")}
-      className="text-blue-300 hover:text-white underline text-sm"
-    >
-      Visitor
-    </button>
-
-    <button
-      type="button"
-      onClick={() => navigate("/jobs/:slug")}
-      className="text-blue-300 hover:text-white underline text-sm"
-    >
-      View Jobs
-    </button>
-  </div>
-</div>
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => navigate("/visitorPage")}
+            className="text-blue-300 underline text-sm"
+          >
+            Continue as Visitor
+          </button>
+        </div>
       </div>
     </div>
   );

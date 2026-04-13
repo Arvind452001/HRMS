@@ -37,6 +37,7 @@ import AttendanceDetails from "../pages/hr-pages/AttendanceDetails";
 import MainForm from "../pages/hr-pages/stepFormEmployee/MainForm";
 import SalaryDashboard from "../pages/hr-pages/Salary/SalaryDashboard";
 import Payroll from "../pages/hr-pages/Salary/Payroll";
+import ResetPassword from "../../pages/ResetPassword";
 
 export default function AppRoutes() {
   return (
@@ -48,6 +49,7 @@ export default function AppRoutes() {
       <Route element={<PublicRoute />}>
         <Route path="/visitorPage" element={<AddVisitorPage />} />
         <Route path="/login" element={<Login />} />
+       <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/jobs/:slug" element={<PublicJobDetails />} />
         <Route path="/apply/:slug" element={<ApplyJob />} />
          {/* <Route path="/employees/add" element={<MainForm />} /> */}
