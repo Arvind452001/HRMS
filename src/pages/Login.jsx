@@ -13,8 +13,10 @@ const Login = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // 🔥 main loader
+  const [loading, setLoading] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
+
+  const isLoading = loading || forgotLoading; // 🔥 combine
 
   const handleChange = (e) => {
     setFormData({
@@ -30,7 +32,7 @@ const Login = () => {
     return newErrors;
   };
 
-  // 🔥 LOGIN
+  // 🔹 LOGIN
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,17 +58,13 @@ const Login = () => {
       else if (role === "employee") navigate("/employee");
       else navigate("/");
     } catch (err) {
-      alert(
-        err.response?.data?.message ||
-          err.message ||
-          "Login failed ❌"
-      );
+      alert(err.response?.data?.message || "Login failed ❌");
     } finally {
       setLoading(false);
     }
   };
 
-  // 🔥 FORGOT PASSWORD
+  // 🔹 FORGOT PASSWORD
   const handleForgotPassword = async () => {
     if (!formData.email) {
       return alert("Please enter email first ⚠️");
@@ -79,22 +77,13 @@ const Login = () => {
         email: formData.email,
       });
 
-      alert("Reset link sent to your email 📩");
+      alert("Reset link sent 📩");
     } catch (err) {
       alert(err.response?.data?.message || "Failed ❌");
     } finally {
       setForgotLoading(false);
     }
   };
-
-  // 🔥 FULL SCREEN LOADER
-  if (loading || forgotLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-gray-200">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div
@@ -103,8 +92,17 @@ const Login = () => {
         backgroundImage: "url('/src/assets/bg-2.png')",
       }}
     >
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/50" />
 
+      {/* 🔥 LOADER OVERLAY */}
+      {isLoading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black/40 z-50">
+          <Loader />
+        </div>
+      )}
+
+      {/* Card */}
       <div className="relative w-full max-w-md bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
 
         <h2 className="text-sm text-gray-200">Welcome to</h2>
@@ -118,64 +116,38 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
 
-          {/* Email */}
-          <div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full bg-transparent border border-white/50 rounded-md px-4 py-3 text-white"
-            />
-            {errors.email && (
-              <p className="text-red-300 text-sm mt-1">{errors.email}</p>
-            )}
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full border px-4 py-3 rounded-md"
+          />
 
-          {/* Password */}
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full bg-transparent border border-white/50 rounded-md px-4 py-3 text-white"
-            />
-            {errors.password && (
-              <p className="text-red-300 text-sm mt-1">{errors.password}</p>
-            )}
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full border px-4 py-3 rounded-md"
+          />
 
-          {/* Forgot */}
           <div className="text-right">
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="text-sm text-gray-200 hover:text-blue-400"
+              className="text-sm text-blue-300"
             >
               Forgot Password?
             </button>
           </div>
 
-          {/* Login */}
-          <button
-            type="submit"
-            className="block w-full py-3 rounded-md bg-gradient-to-r from-blue-500 to-blue-900 font-semibold text-white"
-          >
+          <button className="w-full py-3 bg-blue-600 rounded-md">
             Log In
           </button>
         </form>
-
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => navigate("/visitorPage")}
-            className="text-blue-300 underline text-sm"
-          >
-            Continue as Visitor
-          </button>
-        </div>
       </div>
     </div>
   );

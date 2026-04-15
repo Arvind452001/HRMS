@@ -38,6 +38,7 @@ import MainForm from "../pages/hr-pages/stepFormEmployee/MainForm";
 import SalaryDashboard from "../pages/hr-pages/Salary/SalaryDashboard";
 import Payroll from "../pages/hr-pages/Salary/Payroll";
 import ResetPassword from "../../pages/ResetPassword";
+import AddSalaryPage from "../pages/hr-pages/Salary/AddSalaryPage";
 
 export default function AppRoutes() {
   return (
@@ -49,10 +50,10 @@ export default function AppRoutes() {
       <Route element={<PublicRoute />}>
         <Route path="/visitorPage" element={<AddVisitorPage />} />
         <Route path="/login" element={<Login />} />
-       <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/jobs/:slug" element={<PublicJobDetails />} />
         <Route path="/apply/:slug" element={<ApplyJob />} />
-         {/* <Route path="/employees/add" element={<MainForm />} /> */}
+        {/* <Route path="/employees/add" element={<MainForm />} /> */}
       </Route>
 
       {/* ===== HR PROTECTED ROUTES ===== */}
@@ -70,7 +71,10 @@ export default function AppRoutes() {
           <Route path="job-post" element={<Jobs />} />
           <Route path="Applications" element={<ApplicationsPage />} />
           <Route path="salary" element={<SalaryDashboard />} />
-            
+          {/* <Route path="/salary-list" element={<EmployeeSalaryTable />} /> */}
+          <Route path="salary/add" element={<AddSalaryPage />} />
+          <Route path="salary/view/:id" element={<AddSalaryPage />} />
+          <Route path="salary/edit/:id" element={<AddSalaryPage />} />
           <Route path="payroll" element={<Payroll />} />
           <Route path="attendance" element={<Attendance />} />
           <Route path="attendanceDetails/:id" element={<AttendanceDetails />} />

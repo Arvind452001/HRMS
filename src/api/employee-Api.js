@@ -33,7 +33,7 @@ export const getEmployeesApi = async (filters) => {
   try {
 
     const response = await axiosInstance.get(
-      "/oldEmployees/getEmployees",
+      "/oldEmployees/getEmployees/:id",
       {
         params: filters,
       }
@@ -58,13 +58,13 @@ export const getAllEmployeesApi = async (filters) => {
   try {
 
     const response = await axiosInstance.get(
-      "/oldEmployees/getEmployees",
+      "/oldEmployees/getAllEmployees",
       {
         params: filters,
       }
     );
 // console.log("API response:", response.data);
-    return response;
+    return response.data;
 
   } catch (err) {
 

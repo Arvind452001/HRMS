@@ -24,7 +24,7 @@
       reminder: "Perfect Attendance",
     },
       {
-      id: 2,
+      id: 3,
       name: "Rohit Sharma",
       empCode: "EMP102",
       workingDays: 26,
@@ -36,7 +36,7 @@
       reminder: "Perfect Attendance",
     },
       {
-      id: 2,
+      id: 4,
       name: "Rohit Sharma",
       empCode: "EMP102",
       workingDays: 26,
@@ -48,7 +48,7 @@
       reminder: "Perfect Attendance",
     },
       {
-      id: 2,
+      id: 5,
       name: "Rohit Sharma",
       empCode: "EMP102",
       workingDays: 26,

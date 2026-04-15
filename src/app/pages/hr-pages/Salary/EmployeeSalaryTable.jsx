@@ -1,147 +1,139 @@
-import { useState } from "react";
-import { salaryData } from "../../../../data/SallryDummyData";
-import SalaryStructureModal from "./SalaryStructureModal";
+// EmployeeSalaryTable.jsx
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { fetchSalaryStructures, deleteSalaryStructure } from '../../../../api/Salary.Api';
 
 export default function EmployeeSalaryTable() {
-  const [activeModal, setActiveModal] = useState(null);
+  const navigate = useNavigate();
+  const [salaries, setSalaries] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const openModal = (type) => {
-    setActiveModal(type);
+  const loadSalaries = async () => {
+    try {
+      setLoading(true);
+      const res = await fetchSalaryStructures();
+      // console.log(res.data.data)
+      setSalaries(res?.data.data);
+    } catch (error) {
+      toast.error('Failed to load salary data');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const closeModal = () => {
-    setActiveModal(null);
+  useEffect(() => {
+    loadSalaries();
+  }, []);
+
+  const handleView = (id) => {
+    navigate(`/salary/view/${id}`);
   };
+
+  const handleEdit = (id) => {
+    navigate(`/salary/edit/${id}`);
+  };
+
+  const handleDelete = async (id, employeeName) => {
+    if (window.confirm(`Delete salary structure for ${employeeName}?`)) {
+      try {
+        await deleteSalaryStructure(id);
+        toast.success('Salary structure deleted successfully');
+        loadSalaries(); // Refresh list
+      } catch (error) {
+        toast.error('Failed to delete');
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="p-0">
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
-
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-primary">
-              Employee Salary
-            </h2>
-
-            <div className="gap-2">
-
-              <button
-                className="btn btn-accent btn-sm"
-                onClick={() => openModal("setup")}
-              >
-                Add employee salary
-              </button>
-
-              {/* <button
-                className="btn btn-success btn-sm mx-2"
-                onClick={() => openModal("payroll")}
-              >
-                Generate monthly payroll
-              </button> */}
-
-              {/* <button
-                className="btn btn-info btn-sm"
-                onClick={() => openModal("payslip")}
-              >
-                Download employee payslips
-              </button> */}
-
-            </div>
+            <h2 className="text-2xl font-bold text-primary">Employee Salary Structures</h2>
+            <button
+              className="btn btn-accent btn-sm"
+              onClick={() => navigate('/hr/salary/add')}
+            >
+              + Add Salary Structure
+            </button>
           </div>
 
-          {/* TABLE */}
-         <div className="overflow-x-auto">
+          <div className="overflow-x-auto">
             <table className="table table-zebra table-md">
               <thead className="bg-primary text-white">
                 <tr>
                   <th>SN</th>
-                  <th>Name</th>
+                  <th>Employee Name</th>
                   <th>Emp Code</th>
-                  <th>Working Days</th>
-                  <th>CL</th>
-                  <th>Week Off</th>
-                  <th>Deduction</th>
-                  <th>Previous CL</th>
+                  <th>Effective From</th>
+                  <th>Gross Salary</th>
                   <th>Net Salary</th>
-                  <th>Action</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
-
               <tbody>
-                {salaryData.map((emp, index) => (
-                  <tr key={emp.id} className="hover">
-                    <td className="font-semibold">{index + 1}</td>
-
-                    <td className="font-medium text-base-content">
-                      {emp.name}
-                    </td>
-
-                    <td>
-                      <span className="badge badge-info">{emp.empCode}</span>
-                    </td>
-
-                    <td>
-                      <span className="badge badge-outline">
-                        {emp.workingDays}
-                      </span>
-                    </td>
-
-                    <td>
-                      <span className="badge badge-success">{emp.cl}</span>
-                    </td>
-
-                    <td>
-                      <span className="badge badge-warning">{emp.weekOff}</span>
-                    </td>
-
-                    <td>
-                      <span className="badge badge-error">
-                        {emp.deductionDays}
-                      </span>
-                    </td>
-
-                    <td>
-                      <span className="badge badge-accent">
-                        {emp.previousCl}
-                      </span>
-                    </td>
-
-                    <td className="font-bold text-success text-lg">
-                      ₹{emp.netSalary}
-                    </td>
-
-                    <td className="">
-                      <button className="btn btn-xs btn-primary text-blue-600">
-                        👁
-                      </button>
-                      <button className="btn btn-xs btn-secondary text-orange-500 ml-2">
-                        ✏
-                      </button>
+                {salaries.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" className="text-center py-8">
+                      No salary structures found. Click "Add Salary Structure" to create one.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  salaries.map((salary, index) => (
+                    <tr key={salary._id} className="hover">
+                      <td className="font-semibold">{index + 1}</td>
+                      <td className="font-medium">{salary.employee?.personal?.fullName || 'N/A'}</td>
+                      <td>
+                        <span className="badge badge-info">
+                          {salary.employee?.empCode || salary.employee?.professional?.employeeId}
+                        </span>
+                      </td>
+                      <td>{new Date(salary.effectiveFrom).toLocaleDateString()}</td>
+                      <td className="text-success font-semibold">₹{salary.gross?.toLocaleString()}</td>
+                      <td className="text-primary font-bold">₹{salary.net?.toLocaleString()}</td>
+                      <td>
+                        <div className="flex gap-2">
+                          <button
+                            className="btn btn-xs btn-info"
+                            onClick={() => handleView(salary._id)}
+                            title="View"
+                          >
+                            👁
+                          </button>
+                          <button
+                            className="btn btn-xs btn-warning"
+                            onClick={() => handleEdit(salary._id)}
+                            title="Edit"
+                          >
+                            ✏
+                          </button>
+                          <button
+                            className="btn btn-xs btn-error"
+                            onClick={() => handleDelete(salary._id, salary.employee?.name)}
+                            title="Delete"
+                          >
+                            🗑
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
-
-      {/* Setup Salary Modal */}
-     {activeModal === "setup" && (
-        <SalaryStructureModal onClose={closeModal} />
-      )}
-
-      {/* Payroll Modal */}
-      {activeModal === "payroll" && (
-        <SalaryStructureModal onClose={closeModal} />
-      )}
-
-      {/* Payslip Modal */}
-      {activeModal === "payslip" && (
-        <SalaryStructureModal onClose={closeModal} />
-      )}
-
     </div>
   );
 }
