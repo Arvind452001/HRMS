@@ -1,7 +1,7 @@
 // EmployeeSalaryTable.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { fetchSalaryStructures, deleteSalaryStructure } from '../../../../api/Salary.Api';
 
 export default function EmployeeSalaryTable() {
@@ -27,11 +27,11 @@ export default function EmployeeSalaryTable() {
   }, []);
 
   const handleView = (id) => {
-    navigate(`/salary/view/${id}`);
+    navigate(`/hr/salary/view/${id}`);
   };
 
   const handleEdit = (id) => {
-    navigate(`/salary/edit/${id}`);
+    navigate(`/hr/salary/edit/${id}`);
   };
 
   const handleDelete = async (id, employeeName) => {
@@ -59,7 +59,7 @@ export default function EmployeeSalaryTable() {
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-primary">Employee Salary Structures</h2>
+            <h2 className="text-2xl font-bold text-primary">Employee Salary</h2>
             <button
               className="btn btn-accent btn-sm"
               onClick={() => navigate('/hr/salary/add')}

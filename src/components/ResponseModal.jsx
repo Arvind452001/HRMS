@@ -5,7 +5,7 @@ export default function ResponseModal({
   onClose,
   type = "success",
   message = "",
-  duration = 5000, // 1 second default
+  duration = 2000, // 1 second default
 }) {
   useEffect(() => {
     if (isOpen) {

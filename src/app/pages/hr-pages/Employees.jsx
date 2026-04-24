@@ -8,6 +8,7 @@ import EmployeeModal from "../../HR-component/employee-components/EmployeeModal"
 import Loader from "../../../components/Loader";
 
 import {
+  getAllEmployeesApi,
  getEmployeesApi,
 } from "../../../api/employee-Api";
 
@@ -29,7 +30,7 @@ export default function Employees() {
     try {
       setLoading(true);
 
-      const res = await getEmployeesApi();
+      const res = await getAllEmployeesApi();
       setEmployees(res.data || []);
     } catch (error) {
       console.error("Error fetching employees:", error);

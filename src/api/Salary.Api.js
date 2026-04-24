@@ -5,5 +5,5 @@ import axiosInstance from "../utils/axiosInstance";
 export const fetchSalaryStructures = () => axiosInstance.get('/salary/getAllSalary');
 export const getSalaryByIdApi = (id) => axiosInstance.get(`/salary/getSalaryById/${id}`);
 export const createSalaryApi = (data) => axiosInstance.post('/salary/add-Salary', data);
-export const updateSalaryApi = (id, data) => axiosInstance.put(`/salary/updateSalary/${id}`, data);
+export const updateSalaryApi = (id, data) => axiosInstance.patch(`/salary/updateSalary/${id}`, data);
 export const deleteSalaryStructure = (id) => axiosInstance.delete(`/salary/deleteSalary/${id}`);

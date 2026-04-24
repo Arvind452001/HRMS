@@ -1,20 +1,28 @@
 // AddSalaryPage.jsx
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { createSalaryApi, updateSalaryApi, getSalaryByIdApi } from '../../../../api/Salary.Api';
 import { getAllEmployeesApi } from '../../../../api/employee-Api';
+import { toast } from 'react-toastify';
 
 export default function AddSalaryPage() {
-  const navigate = useNavigate();
-  const { mode, id } = useParams(); // mode = 'add', 'view', 'edit'
+    const navigate = useNavigate();
+  const { id } = useParams(); // only id from params now
+  const location = useLocation(); // to get current path
+//  const { mode, id } = useParams(); // mode = 'add', 'view', 'edit'
   
-  const isViewMode = mode === 'view';
-  const isEditMode = mode === 'edit';
-  const isAddMode = mode === 'add';
+  // Determine mode from URL path
+  const pathname = location.pathname;
+  const isViewMode = pathname.includes('/view/');
+  const isEditMode = pathname.includes('/edit/');
+  const isAddMode = pathname.includes('/add/');
+
+  // const isViewMode = mode === 'view';
+  // const isEditMode = mode === 'edit';
+  // const isAddMode = mode === 'add';
 
   const [employees, setEmployees] = useState([]);
-  console.log("employees",employees)
+  // console.log("employees",employees)
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(isEditMode || isViewMode);
   const [form, setForm] = useState({
@@ -47,7 +55,7 @@ export default function AddSalaryPage() {
   const loadEmployees = async () => {
     try {
       const res  = await getAllEmployeesApi();
-      console.log("data",res?.data)
+      // console.log("data",res?.data)
       setEmployees(res?.data || []);
     } catch (error) {
       toast.error('Failed to load employees');
@@ -55,9 +63,12 @@ export default function AddSalaryPage() {
   };
 
   const loadSalaryData = async () => {
+    console.log("running")
     try {
       setPageLoading(true);
-      const { data } = await getSalaryByIdApi(id);
+      const res  = await getSalaryByIdApi(id);
+      const data= res.data.data
+      console.log("sallay-Details",res.data.data)
       setForm({
         employee: data.employee?._id || data.employee || "",
         salaryType: data.salaryType || "monthly",
@@ -130,10 +141,10 @@ export default function AddSalaryPage() {
 
       if (isEditMode) {
         await updateSalaryApi(id, payload);
-        toast.success('Salary structure updated successfully');
+        toast.success('Salary updated successfully');
       } else {
         await createSalaryApi(payload);
-        toast.success('Salary structure created successfully');
+        toast.success('Salary Added successfully');
       }
       navigate('/hr/salary');
     } catch (error) {
