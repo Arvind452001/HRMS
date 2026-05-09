@@ -1,6 +1,6 @@
 import React from 'react'
-import Attendance from '../../Employee-Component/dashboardComponent/Attendance'
-import AttendanceCalendar from '../../Employee-Component/dashboardComponent/AttendanceCalendar'
+import Attendance from '../../Employee-Component/Attendance'
+import AttendanceCalendar from '../../Employee-Component/AttendanceCalendar'
 
 const Dashboard = () => {
   return (

@@ -3,7 +3,7 @@ import logo from ".././assets/logo.jpg";
 import { Headphones, LogOut } from "lucide-react";
 import { menu } from "../data/Dummy-Data";
 
-export default function Sidebar({ role, sidebarOpen }) {
+export default function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,6 +15,12 @@ export default function Sidebar({ role, sidebarOpen }) {
 
     // ✅ redirect to login
     navigate("/login");
+  };
+  //================== For Employee: Auto-close sidebar on nav click (mobile) =================//
+  const handleNavClick = () => {
+    if (role === "employee") {
+      setSidebarOpen(false);
+    }
   };
 
   return (
@@ -40,6 +46,7 @@ export default function Sidebar({ role, sidebarOpen }) {
               <NavLink
                 end
                 to={item.path}
+                //  onClick={handleNavClick}
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg text-sm font-normal transition-all
                   ${
@@ -65,7 +72,7 @@ export default function Sidebar({ role, sidebarOpen }) {
             `flex items-center gap-3 rounded-lg text-sm font-medium px-3 py-2 transition-all
             ${
               isActive
-                ? "bg-primary text-primary-content shadow-md"
+                ? "bg-gradient-to-r from-primary to-secondary text-primary-content shadow-md"
                 : "bg-base-200 hover:bg-base-300"
             }`
           }
@@ -76,7 +83,7 @@ export default function Sidebar({ role, sidebarOpen }) {
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2 rounded-lg transition text-error hover:bg-blue-500 hover:text-white"
+          className="flex items-center gap-3 w-full px-3 py-2 rounded-lg transition text-error hover:bg-red-500 to-secondary hover:text-white"
         >
           <LogOut size={18} />
           Logout

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { fetchSalaryStructures, deleteSalaryStructure } from '../../../../api/Salary.Api';
+import { deleteSalaryHR, getAllSalariesHR } from '../../../../api/Salary.Api';
 
 export default function EmployeeSalaryTable() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function EmployeeSalaryTable() {
   const loadSalaries = async () => {
     try {
       setLoading(true);
-      const res = await fetchSalaryStructures();
+      const res = await getAllSalariesHR();
       // console.log(res.data.data)
       setSalaries(res?.data.data);
     } catch (error) {
@@ -37,7 +37,7 @@ export default function EmployeeSalaryTable() {
   const handleDelete = async (id, employeeName) => {
     if (window.confirm(`Delete salary structure for ${employeeName}?`)) {
       try {
-        await deleteSalaryStructure(id);
+        await deleteSalaryHR(id);
         toast.success('Salary structure deleted successfully');
         loadSalaries(); // Refresh list
       } catch (error) {
@@ -78,7 +78,7 @@ export default function EmployeeSalaryTable() {
                   <th>Effective From</th>
                   <th>Gross Salary</th>
                   <th>Net Salary</th>
-                  <th>Actions</th>
+                  {/* <th>Actions</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -101,7 +101,7 @@ export default function EmployeeSalaryTable() {
                       <td>{new Date(salary.effectiveFrom).toLocaleDateString()}</td>
                       <td className="text-success font-semibold">₹{salary.gross?.toLocaleString()}</td>
                       <td className="text-primary font-bold">₹{salary.net?.toLocaleString()}</td>
-                      <td>
+                      {/* <td>
                         <div className="flex gap-2">
                           <button
                             className="btn btn-xs btn-info"
@@ -125,7 +125,7 @@ export default function EmployeeSalaryTable() {
                             🗑
                           </button>
                         </div>
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 )}

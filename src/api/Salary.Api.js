@@ -1,9 +1,15 @@
 import axiosInstance from "../utils/axiosInstance";
 
 
-// Add these to your existing Salary.Api.js
-export const fetchSalaryStructures = () => axiosInstance.get('/salary/getAllSalary');
-export const getSalaryByIdApi = (id) => axiosInstance.get(`/salary/getSalaryById/${id}`);
-export const createSalaryApi = (data) => axiosInstance.post('/salary/add-Salary', data);
-export const updateSalaryApi = (id, data) => axiosInstance.patch(`/salary/updateSalary/${id}`, data);
-export const deleteSalaryStructure = (id) => axiosInstance.delete(`/salary/deleteSalary/${id}`);
+//===========HR-Salary Management Api===========//
+export const getAllSalariesHR = () => axiosInstance.get("/salary/getAllSalary");
+export const getSalaryByIdHR = (id) => axiosInstance.get(`/getSalaryById/${id}`);
+export const createSalaryHR = (data) => axiosInstance.post("/salary/add-Salary", data);
+export const updateSalaryHR = (id, data) => axiosInstance.patch(`/salary/hr/update/${id}`, data);
+export const deleteSalaryHR = (id) => axiosInstance.delete(`/salary/hr/delete/${id}`);
+
+//====================Employee Api===================//
+// Employee - Only own salary
+export const getMySalary = () => axiosInstance.get("/salary/getMySalary");
+// Optional: salary history
+export const getMySalaryHistory = () => axiosInstance.get("/salary/employee/history");

@@ -10,7 +10,7 @@ const EmployeeLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <div className="h-screen bg-base-200">
+    <div className="h-screen bg-gradient-to-br from-indigo-100 rounded-2xl via-purple-100 to-pink-100">
       
       {/* Sidebar (Fixed + Animated) */}
       <Sidebar role={role} sidebarOpen={sidebarOpen} />
@@ -29,7 +29,7 @@ const EmployeeLayout = () => {
         />
 
         {/* Main Scroll Area */}
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-0">
           <Outlet />
         </main>
       </div>

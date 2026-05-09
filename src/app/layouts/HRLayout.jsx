@@ -7,7 +7,7 @@ const HRLayout = () => {
   const user = JSON.parse(localStorage.getItem("technoUser" || "{}"));
   const role = user?.role;
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <div className="h-screen bg-base-200">

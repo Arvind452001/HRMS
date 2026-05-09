@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { getAllAttendanceApi } from "../../../api/attendanceApi";
+import { getAllAttendanceApi } from "../../api/attendanceApi";
 
 export default function AttendanceCalendar() {
   const [value, setValue] = useState(new Date());
@@ -17,7 +17,7 @@ export default function AttendanceCalendar() {
       const year = dateObj.getFullYear();
       const month = dateObj.getMonth() + 1;
 
-      const res = await getAllAttendanceApi({ year, month });
+      const res = await getAllAttendanceApi(year, month );
 
       const map = {};
 
@@ -63,7 +63,7 @@ export default function AttendanceCalendar() {
   };
 
   return (
-   <div className="bg-white rounded-2xl shadow-lg p-5 mt-4 w-full">
+   <div className="bg-white rounded-2xl shadow-lg p-5 mt-4 w-[90%] mx-auto">
 
   <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
     📅 Attendance Calendar

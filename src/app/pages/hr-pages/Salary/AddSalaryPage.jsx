@@ -1,21 +1,21 @@
 // AddSalaryPage.jsx
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { createSalaryApi, updateSalaryApi, getSalaryByIdApi } from '../../../../api/Salary.Api';
-import { getAllEmployeesApi } from '../../../../api/employee-Api';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { getAllEmployeesApi } from "../../../../api/employee-Api";
+import { toast } from "react-toastify";
+import { createSalaryHR } from "../../../../api/Salary.Api";
 
 export default function AddSalaryPage() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams(); // only id from params now
   const location = useLocation(); // to get current path
-//  const { mode, id } = useParams(); // mode = 'add', 'view', 'edit'
-  
+  //  const { mode, id } = useParams(); // mode = 'add', 'view', 'edit'
+
   // Determine mode from URL path
   const pathname = location.pathname;
-  const isViewMode = pathname.includes('/view/');
-  const isEditMode = pathname.includes('/edit/');
-  const isAddMode = pathname.includes('/add/');
+  const isViewMode = pathname.includes("/view/");
+  const isEditMode = pathname.includes("/edit/");
+  const isAddMode = pathname.includes("/add/");
 
   // const isViewMode = mode === 'view';
   // const isEditMode = mode === 'edit';
@@ -29,6 +29,8 @@ export default function AddSalaryPage() {
     employee: "",
     salaryType: "monthly",
     effectiveFrom: "",
+    month: "", // ✅ add
+    year: "", // ✅ add
     basic: "",
     hra: "",
     da: "",
@@ -54,25 +56,29 @@ export default function AddSalaryPage() {
 
   const loadEmployees = async () => {
     try {
-      const res  = await getAllEmployeesApi();
+      const res = await getAllEmployeesApi();
       // console.log("data",res?.data)
       setEmployees(res?.data || []);
     } catch (error) {
-      toast.error('Failed to load employees');
+      toast.error("Failed to load employees");
     }
   };
 
   const loadSalaryData = async () => {
-    console.log("running")
+    console.log("running");
     try {
       setPageLoading(true);
-      const res  = await getSalaryByIdApi(id);
-      const data= res.data.data
-      console.log("sallay-Details",res.data.data)
+      const res = await getSalaryByIdApi(id);
+      const data = res.data.data;
+      console.log("sallay-Details", res.data.data);
       setForm({
         employee: data.employee?._id || data.employee || "",
         salaryType: data.salaryType || "monthly",
-        effectiveFrom: data.effectiveFrom ? data.effectiveFrom.split('T')[0] : "",
+        effectiveFrom: data.effectiveFrom
+          ? data.effectiveFrom.split("T")[0]
+          : "",
+        month: data.month || "", // ✅
+        year: data.year || "", // ✅
         basic: data.basic || "",
         hra: data.hra || "",
         da: data.da || "",
@@ -84,8 +90,8 @@ export default function AddSalaryPage() {
         otherDeduction: data.otherDeduction || "",
       });
     } catch (error) {
-      toast.error('Failed to load salary data');
-      navigate('/salary-list');
+      toast.error("Failed to load salary data");
+      navigate("/salary-list");
     } finally {
       setPageLoading(false);
     }
@@ -116,14 +122,17 @@ export default function AddSalaryPage() {
     if (isViewMode) return;
 
     if (!form.employee) {
-      toast.error('Please select an employee');
+      toast.error("Please select an employee");
       return;
     }
     if (!form.effectiveFrom) {
-      toast.error('Please select effective date');
+      toast.error("Please select effective date");
       return;
     }
-
+    if (!form.month || !form.year) {
+      toast.error("Please select month and enter year");
+      return;
+    }
     setLoading(true);
     try {
       const payload = {
@@ -140,15 +149,15 @@ export default function AddSalaryPage() {
       };
 
       if (isEditMode) {
-        await updateSalaryApi(id, payload);
-        toast.success('Salary updated successfully');
+        await updateSalaryHR(id, payload);
+        toast.success("Salary updated successfully");
       } else {
-        await createSalaryApi(payload);
-        toast.success('Salary Added successfully');
+        await createSalaryHR(payload);
+        toast.success("Salary Added successfully");
       }
-      navigate('/hr/salary');
+      navigate("/hr/salary");
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Something went wrong');
+      toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -163,17 +172,21 @@ export default function AddSalaryPage() {
   }
 
   // Get selected employee name for view mode title
-  const selectedEmployee = employees?.find(emp => emp._id === form.employee);
-  const pageTitle = isAddMode ? 'Add New Salary Structure' 
-                    : isEditMode ? `Edit Salary - ${selectedEmployee?.name || ''}`
-                    : `View Salary - ${selectedEmployee?.name || ''}`;
+  const selectedEmployee = employees?.find((emp) => emp._id === form.employee);
+  const pageTitle = isAddMode
+    ? "Add New Salary Structure"
+    : isEditMode
+      ? `Edit Salary - ${selectedEmployee?.name || ""}`
+      : `View Salary - ${selectedEmployee?.name || ""}`;
 
   return (
     <div className="min-h-screen bg-base-200 py-8">
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
-            <h2 className="card-title text-3xl text-primary mb-6">{pageTitle}</h2>
+            <h2 className="card-title text-3xl text-primary mb-6">
+              {pageTitle}
+            </h2>
 
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -183,9 +196,9 @@ export default function AddSalaryPage() {
                     <span className="label-text font-medium">Employee *</span>
                   </label>
                   <select
-                    className={`select select-bordered w-full ${isViewMode ? 'select-ghost bg-base-200' : ''}`}
+                    className={`select select-bordered w-full ${isViewMode ? "select-ghost bg-base-200" : ""}`}
                     value={form.employee}
-                    onChange={(e) => updateField('employee', e.target.value)}
+                    onChange={(e) => updateField("employee", e.target.value)}
                     required
                     disabled={isViewMode}
                   >
@@ -204,9 +217,9 @@ export default function AddSalaryPage() {
                     <span className="label-text font-medium">Salary Type</span>
                   </label>
                   <select
-                    className={`select select-bordered ${isViewMode ? 'select-ghost bg-base-200' : ''}`}
+                    className={`select select-bordered ${isViewMode ? "select-ghost bg-base-200" : ""}`}
                     value={form.salaryType}
-                    onChange={(e) => updateField('salaryType', e.target.value)}
+                    onChange={(e) => updateField("salaryType", e.target.value)}
                     disabled={isViewMode}
                   >
                     <option value="monthly">Monthly</option>
@@ -217,53 +230,121 @@ export default function AddSalaryPage() {
                 {/* Effective Date */}
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Effective From *</span>
+                    <span className="label-text font-medium">
+                      Effective From *
+                    </span>
                   </label>
                   <input
                     type="date"
-                    className={`input input-bordered ${isViewMode ? 'input-ghost bg-base-200' : ''}`}
+                    className={`input input-bordered ${isViewMode ? "input-ghost bg-base-200" : ""}`}
                     value={form.effectiveFrom}
-                    onChange={(e) => updateField('effectiveFrom', e.target.value)}
+                    onChange={(e) =>
+                      updateField("effectiveFrom", e.target.value)
+                    }
                     required
                     disabled={isViewMode}
+                  />
+                </div>
+
+                {/* Month */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-medium">Month *</span>
+                  </label>
+                  <select
+                    className={`select select-bordered ${isViewMode ? "select-ghost bg-base-200" : ""}`}
+                    value={form.month}
+                    onChange={(e) =>
+                      updateField("month", Number(e.target.value))
+                    }
+                    disabled={isViewMode}
+                    required
+                  >
+                    <option value="">Select Month</option>
+                    {[
+                      "Jan",
+                      "Feb",
+                      "Mar",
+                      "Apr",
+                      "May",
+                      "Jun",
+                      "Jul",
+                      "Aug",
+                      "Sep",
+                      "Oct",
+                      "Nov",
+                      "Dec",
+                    ].map((m, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {m}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Year */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-medium">Year *</span>
+                  </label>
+                  <input
+                    type="number"
+                    className={`input input-bordered ${isViewMode ? "input-ghost bg-base-200" : ""}`}
+                    placeholder="Enter year (e.g. 2026)"
+                    value={form.year}
+                    onChange={(e) =>
+                      updateField("year", Number(e.target.value))
+                    }
+                    disabled={isViewMode}
+                    required
                   />
                 </div>
               </div>
 
               {/* Earnings Section */}
               <div className="mt-6">
-                <h4 className="font-semibold text-lg mb-3 text-success">Earnings</h4>
+                <h4 className="font-semibold text-lg mb-3 text-success">
+                  Earnings
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {['basic', 'hra', 'da', 'specialAllowance', 'bonus'].map((field) => (
-                    <div className="form-control" key={field}>
-                      <label className="label">
-                        <span className="label-text capitalize">{field.replace(/([A-Z])/g, ' $1')}</span>
-                      </label>
-                      <input
-                        type="number"
-                        className={`input input-bordered ${isViewMode ? 'input-ghost bg-base-200' : ''}`}
-                        placeholder="0"
-                        value={form[field]}
-                        onChange={(e) => updateField(field, e.target.value)}
-                        disabled={isViewMode}
-                      />
-                    </div>
-                  ))}
+                  {["basic", "hra", "da", "specialAllowance", "bonus"].map(
+                    (field) => (
+                      <div className="form-control" key={field}>
+                        <label className="label">
+                          <span className="label-text capitalize">
+                            {field.replace(/([A-Z])/g, " $1")}
+                          </span>
+                        </label>
+                        <input
+                          type="number"
+                          className={`input input-bordered ${isViewMode ? "input-ghost bg-base-200" : ""}`}
+                          placeholder="0"
+                          value={form[field]}
+                          onChange={(e) => updateField(field, e.target.value)}
+                          disabled={isViewMode}
+                        />
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
 
               {/* Deductions Section */}
               <div className="mt-6">
-                <h4 className="font-semibold text-lg mb-3 text-error">Deductions</h4>
+                <h4 className="font-semibold text-lg mb-3 text-error">
+                  Deductions
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {['pf', 'esi', 'tax', 'otherDeduction'].map((field) => (
+                  {["pf", "esi", "tax", "otherDeduction"].map((field) => (
                     <div className="form-control" key={field}>
                       <label className="label">
-                        <span className="label-text capitalize">{field.replace(/([A-Z])/g, ' $1')}</span>
+                        <span className="label-text capitalize">
+                          {field.replace(/([A-Z])/g, " $1")}
+                        </span>
                       </label>
                       <input
                         type="number"
-                        className={`input input-bordered ${isViewMode ? 'input-ghost bg-base-200' : ''}`}
+                        className={`input input-bordered ${isViewMode ? "input-ghost bg-base-200" : ""}`}
                         placeholder="0"
                         value={form[field]}
                         onChange={(e) => updateField(field, e.target.value)}
@@ -280,15 +361,21 @@ export default function AddSalaryPage() {
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div className="stat">
                     <div className="stat-title text-primary">Gross Salary</div>
-                    <div className="stat-value text-primary text-2xl">₹{gross.toLocaleString()}</div>
+                    <div className="stat-value text-primary text-2xl">
+                      ₹{gross.toLocaleString()}
+                    </div>
                   </div>
                   <div className="stat">
                     <div className="stat-title text-error">Total Deduction</div>
-                    <div className="stat-value text-error text-2xl">₹{totalDeduction.toLocaleString()}</div>
+                    <div className="stat-value text-error text-2xl">
+                      ₹{totalDeduction.toLocaleString()}
+                    </div>
                   </div>
                   <div className="stat">
                     <div className="stat-title text-success">Net Salary</div>
-                    <div className="stat-value text-success text-2xl">₹{net.toLocaleString()}</div>
+                    <div className="stat-value text-success text-2xl">
+                      ₹{net.toLocaleString()}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -298,7 +385,7 @@ export default function AddSalaryPage() {
                 <button
                   type="button"
                   className="btn btn-ghost"
-                  onClick={() => navigate('/salary-list')}
+                  onClick={() => navigate("/salary-list")}
                 >
                   Back
                 </button>
@@ -308,8 +395,10 @@ export default function AddSalaryPage() {
                     className="btn btn-primary"
                     disabled={loading}
                   >
-                    {loading && <span className="loading loading-spinner loading-sm"></span>}
-                    {isEditMode ? 'Update' : 'Save'}
+                    {loading && (
+                      <span className="loading loading-spinner loading-sm"></span>
+                    )}
+                    {isEditMode ? "Update" : "Save"}
                   </button>
                 )}
               </div>

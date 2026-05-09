@@ -20,6 +20,7 @@ export const checkInApi = async (data) => {
 
 export const checkOutApi = async (data) => {
   try {
+    localStorage.removeItem("checkInTime");
     const response = await axiosInstance.post(
       `/employees/check-out`,
       data
@@ -33,15 +34,28 @@ export const checkOutApi = async (data) => {
 
 
 /* ================= Get All Attendance ================= */
-export const getAllAttendanceApi = async () => {
+export const getAllAttendanceApi = async (
+  year,
+  month
+) => {
+
   try {
-    const response = await axiosInstance.get(
-      `/employees/attendance/my`
-    );
+console.log('getAllAttendanceApi',year,month)
+    const response =
+      await axiosInstance.get(
+        `/employees/attendance/my`,
+        {
+          params: {
+            year,
+            month,
+          },
+        }
+      );
 
     return response.data;
 
   } catch (err) {
+
     throw (
       err.response?.data || {
         success: false,

@@ -68,9 +68,9 @@ export default function Header({ onSearch, sidebarOpen, setSidebarOpen }) {
       {/* Right Icons */}
       <div className="relative flex items-center gap-3" ref={notifRef}>
         {/* Dark / Light Toggle */}
-        <button onClick={toggleTheme} className="btn btn-ghost btn-sm">
+        {/* <button onClick={toggleTheme} className="btn btn-ghost btn-sm">
           {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-        </button>
+        </button> */}
 
         <button className="btn btn-ghost btn-sm">
           <MessageSquare size={18} />

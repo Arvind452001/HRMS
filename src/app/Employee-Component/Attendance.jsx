@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { checkInApi, checkOutApi } from "../../../api/attendanceApi";
+
 import { CircularTimer } from "./CircularTimer";
+import { checkInApi, checkOutApi } from "../../api/attendanceApi";
+import { useNavigate } from "react-router-dom";
 
 export default function Attendance() {
   const [checkedIn, setCheckedIn] = useState(false);
   const [timer, setTimer] = useState(0); // seconds
   const [checkInTime, setCheckInTime] = useState(null);
   const [totalTime, setTotalTime] = useState(0);
-
-  const currentUser = JSON.parse(localStorage.getItem("technoUser"));
-  console.log("currentUser", currentUser);
+  const [currentUser, setCurrentUser] = useState(null);
+const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("technoUser"));
+    setCurrentUser(user);
+  }, []);
 
   // 🔥 Load from localStorage (refresh support)
   useEffect(() => {
-    const savedTime = localStorage.getItem("checkInTime");
-
-    if (savedTime) {
+    const saved = localStorage.getItem("checkInTime");
+    if (saved) {
       setCheckedIn(true);
-      setCheckInTime(Number(savedTime));
+      setCheckInTime(Number(saved));
     }
   }, []);
 
@@ -44,94 +48,90 @@ export default function Attendance() {
     return `${h}:${m}:${s}`;
   };
 
-// 🔥 CHECK-IN
-const handleCheckIn = async () => {
-  const confirm = await Swal.fire({
-    title: "Check In?",
-    icon: "question",
-    showCancelButton: true,
-  });
-
-  if (!confirm.isConfirmed) return;
-
-  try {
-    const now = new Date();
-
-    const res = await checkInApi({
-      checkInTime: now.toISOString(), // ✅ UTC भेजा
+  // 🔥 CHECK-IN
+  const handleCheckIn = async () => {
+    const confirm = await Swal.fire({
+      title: "Check In?",
+      icon: "question",
+      showCancelButton: true,
     });
 
-    const localTime = now.getTime();
+    if (!confirm.isConfirmed) return;
 
-    setCheckedIn(true);
-    setCheckInTime(localTime);
-    setTimer(0);
+    try {
+      const res = await checkInApi();
+      console.log("CHECK-IN RESPONSE:", res.message);
+      const attendance = res?.data;
+      console.log("attendance:", res?.data);
+      // 🔥 safety check
+      if (!attendance || !attendance.checkIn) {
+        throw new Error("Invalid check-in response");
+      }
 
-    localStorage.setItem("checkInTime", localTime);
+      const serverTime = new Date(attendance.checkIn).getTime();
 
-    Swal.fire("Checked In!", res?.message || "Success", "success");
-  } catch (err) {
-    Swal.fire("Error", err?.message || "Failed", "error");
-  }
-};
+      setCheckedIn(true);
+      setCheckInTime(serverTime);
+      setTimer(0);
 
-// 🔥 CHECK-OUT
-const handleCheckOut = async () => {
-  const confirm = await Swal.fire({
-    title: "Check Out?",
-    icon: "warning",
-    showCancelButton: true,
-  });
+      localStorage.setItem("checkInTime", serverTime);
 
-  if (!confirm.isConfirmed) return;
+      Swal.fire("Checked In!", res?.data?.message || "Success", "success");
+    } catch (err) {
+      console.error("CHECK-IN ERROR:", err);
+      Swal.fire("Error", err?.message || "Failed", "error");
+    }
+  };
 
-  try {
-    const now = new Date();
-
-    const res = await checkOutApi({
-      checkOutTime: now.toISOString(), // ✅ UTC भेजा
+  // 🔥 CHECK-OUT
+  const handleCheckOut = async () => {
+    const confirm = await Swal.fire({
+      title: "Check Out?",
+      icon: "warning",
+      showCancelButton: true,
     });
 
-    setCheckedIn(false);
-    setTotalTime(timer);
+    if (!confirm.isConfirmed) return;
 
-    localStorage.removeItem("checkInTime");
+    try {
+      const res = await checkOutApi();
 
-    Swal.fire("Checked Out!", res?.message || "Done", "success");
-  } catch (err) {
-    Swal.fire("Error", err?.message || "Failed", "error");
-  }
-};
+      // optional: backend time
+      const serverTime = new Date(res?.data?.data?.checkOut).getTime();
+
+      setCheckedIn(false);
+      setTotalTime(timer);
+
+      localStorage.removeItem("checkInTime");
+
+      Swal.fire("Checked Out!", res?.data?.message || "Done", "success");
+    } catch (err) {
+      Swal.fire("Error", err?.message || "Failed", "error");
+    }
+  };
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
       {/* HEADER */}
-    <div className="bg-gradient-to-r from-green-600 to-green-400 text-white rounded-xl p-4 flex justify-between items-center">
+      <div className="bg-gradient-to-r from-green-600 to-green-400 text-white rounded-xl p-4 flex justify-between items-center">
+        {/* LEFT */}
+        <h2 className="font-semibold text-lg">Attendance Dashboard</h2>
 
-  {/* LEFT */}
-  <h2 className="font-semibold text-lg">
-    Attendance Dashboard
-  </h2>
+        {/* RIGHT */}
+        <div className="text-right">
+          <div className="text-sm">
+            <span className="opacity-80">Name - </span>
+            <span className="font-semibold text-base">{currentUser?.name}</span>
+          </div>
 
-  {/* RIGHT */}
-  <div className="text-right">
-
-    <div className="text-sm">
-      <span className="opacity-80">Name - </span>
-      <span className="font-semibold text-base">
-        {currentUser?.name}
-      </span>
-    </div>
-
-    <div className="text-sm mt-1">
-      <span className="opacity-80">Emp ID - </span>
-      <span className="font-semibold text-base">
-        {currentUser?.employeeId}
-      </span>
-    </div>
-
-  </div>
-</div>
+          <div className="text-sm mt-1">
+            <span className="opacity-80">Emp ID - </span>
+            <span className="font-semibold text-base">
+              {currentUser?.employeeId}
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* MAIN */}
       <div className="grid md:grid-cols-2 gap-4 mt-4 ">
@@ -177,7 +177,7 @@ const handleCheckOut = async () => {
               </button>
             )}
 
-            <button className="btn btn-outline w-full">View Attendance</button>
+            <button  className="btn btn-outline w-full" onClick={()=>navigate('/employee/attendance')}>View Attendance</button>
           </div>
         </div>
       </div>

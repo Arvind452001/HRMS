@@ -34,7 +34,7 @@ export const menu = {
     { name: "Attendance", icon: CalendarCheck, path: "attendance" },
     { name: "Leave Management", icon: Calendar, path: "leaveManagement" },
     { name: "Payroll & Salary", icon: Wallet, path: "payroll-salary" }, // avoid & in URL
-    { name: "Company Policies", icon: Briefcase, path: "companyPolicies" },
+    { name: "Company Policies", icon: Briefcase, path: "privacy-Policy" },
   ],
 };
 

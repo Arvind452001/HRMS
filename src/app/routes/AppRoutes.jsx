@@ -18,9 +18,7 @@ import CompanyPolicy from "../pages/hr-pages/CompanyPolicy";
 import Settings from "../pages/hr-pages/Settings";
 
 // Employee Pages
-import CompanyPolicies from "../pages/employee-pages/CompanyPolicies";
 import Payslip from "../pages/employee-pages/PayrollSalary";
-import Leave from "../pages/employee-pages/Leave";
 import AttendanceEmployee from "../pages/employee-pages/AttendanceEmployee";
 import Dashboard from "../pages/employee-pages/Dashboard";
 import MyProfile from "../pages/employee-pages/MyProfile";
@@ -39,6 +37,10 @@ import SalaryDashboard from "../pages/hr-pages/Salary/SalaryDashboard";
 import Payroll from "../pages/hr-pages/Salary/Payroll";
 import ResetPassword from "../../pages/ResetPassword";
 import AddSalaryPage from "../pages/hr-pages/Salary/AddSalaryPage";
+import EmpLeaveManagement from "../pages/employee-pages/EmpLeaveManagement";
+import PayrollSalary from "../pages/employee-pages/PayrollSalary";
+import EmployeeSalaryTable from "../pages/hr-pages/Salary/EmployeeSalaryTable";
+import PrivacyPolicy from "../pages/employee-pages/PrivacyPolicy";
 
 export default function AppRoutes() {
   return (
@@ -71,7 +73,7 @@ export default function AppRoutes() {
           <Route path="job-post" element={<Jobs />} />
           <Route path="Applications" element={<ApplicationsPage />} />
           <Route path="salary" element={<SalaryDashboard />} />
-          {/* <Route path="/salary-list" element={<EmployeeSalaryTable />} /> */}
+          {/* <Route path="salary-list" element={<EmployeeSalaryTable />} /> */}
           <Route path="salary/add" element={<AddSalaryPage />} />
           <Route path="salary/view/:id" element={<AddSalaryPage />} />
           <Route path="salary/edit/:id" element={<AddSalaryPage />} />
@@ -93,10 +95,10 @@ export default function AppRoutes() {
           <Route index element={<Dashboard />} /> {/* /employee */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="attendance" element={<AttendanceEmployee />} />
-          <Route path="leaveManagement" element={<Leave />} />
-          <Route path="payroll-salary" element={<Payslip />} />
+          <Route path="leaveManagement" element={<EmpLeaveManagement />} />
+          <Route path="payroll-salary" element={<PayrollSalary />} />
           <Route path="myProfile" element={<MyProfile />} />
-          <Route path="companyPolicies" element={<CompanyPolicies />} />
+          <Route path="privacy-Policy" element={<PrivacyPolicy />} />
           <Route path="support" element={<Support />} />
           {/* use hyphen instead of space */}
         </Route>
