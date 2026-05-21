@@ -13,7 +13,7 @@ export default function AdminVisitorsPage() {
   const [visitorsLoading, setVisitorsLoading] = useState(true);
   const [employeesLoading, setEmployeesLoading] = useState(true);
   const [error, setError] = useState("");
-
+// console.log("employees",employees)
   const navigate = useNavigate();
 
   /* ================= FETCH VISITORS ================= */

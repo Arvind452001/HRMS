@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { scheduleInterviewApi } from "../../../api/interviewApi";
+import Swal from "sweetalert2";
 
 export default function InterviewScheduleModal({
   selectedVisitor,
@@ -19,34 +20,80 @@ export default function InterviewScheduleModal({
     timeSlots.push(`${hour12}:00 ${ampm}`);
   }
 
-  console.log("employees",employees)
-  const handleSchedule = async () => {
-    if (!roundType || !interviewerId || !interviewDate || !interviewTime) {
-      return alert("Please fill all fields");
-    }
+ 
 
-    try {
-      const payload = {
-        candidateId: selectedVisitor._id,
-        roundType,
-        interviewerId,
-        interviewDate,
-        interviewTime,
-      };
+const handleSchedule = async () => {
+  if (!roundType || !interviewerId || !interviewDate || !interviewTime) {
+    return Swal.fire({
+      icon: "warning",
+      title: "Missing Fields",
+      text: "Please fill all fields",
+      confirmButtonColor: "#4F46E5",
+    });
+  }
 
-      await scheduleInterviewApi(payload);
+  try {
+    /* ===== CONVERT TIME ===== */
+    const convertTo24Hour = (time12h) => {
+      const [time, modifier] = time12h.split(" ");
+      let [hours, minutes] = time.split(":");
 
-      alert("Interview Scheduled Successfully");
+      hours = parseInt(hours);
 
-      onClose();
-    } catch (err) {
-      alert(
-        err?.response?.data?.message ||
-          err?.message ||
-          "Scheduling failed"
-      );
-    }
-  };
+      if (modifier === "PM" && hours !== 12) {
+        hours += 12;
+      }
+
+      if (modifier === "AM" && hours === 12) {
+        hours = 0;
+      }
+
+      return `${hours.toString().padStart(2, "0")}:${minutes}`;
+    };
+
+    /* ===== PAYLOAD ===== */
+    const payload = {
+      candidateId: selectedVisitor._id,
+      roundType,
+      interviewerId,
+      interviewDate,
+      interviewTime: convertTo24Hour(interviewTime),
+    };
+
+    // console.log(payload);
+
+    /* ===== API CALL ===== */
+    const response = await scheduleInterviewApi(payload);
+
+    // axios response
+    const data = response.data;
+
+    console.log(data);
+
+    /* ===== SUCCESS ===== */
+    await Swal.fire({
+      icon: "success",
+      title: "Interview Scheduled",
+      text: data.message || "Interview scheduled successfully",
+      confirmButtonColor: "#4F46E5",
+    });
+
+    onClose();
+
+  } catch (error) {
+    console.log(error);
+
+    Swal.fire({
+      icon: "error",
+      title: "Scheduling Failed",
+      text:
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong",
+      confirmButtonColor: "#DC2626",
+    });
+  }
+};
 
   return (
     <dialog open className="modal">
@@ -89,7 +136,7 @@ export default function InterviewScheduleModal({
             <option value="">Select Employee</option>
             {employees.map((emp) => (
               <option key={emp._id} value={emp._id}>
-                {emp.name}
+                {emp?.personal?.fullName}
               </option>
             ))}
           </select>
@@ -143,4 +190,3 @@ export default function InterviewScheduleModal({
     </dialog>
   );
 }
-
