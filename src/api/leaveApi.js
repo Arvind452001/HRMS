@@ -36,3 +36,30 @@ export const cancelLeaveApi = async (leaveId) => {
     throw err.response?.data || { message: err.message };
   }
 };
+
+
+// Get All Leaves (HR)
+export const getAllLeaveApi = async (params = {}) => {
+  try {
+    const response = await axiosInstance.get("/admin/leaves/pending", {
+      params,
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err.response?.data || { message: err.message };
+  }
+};
+
+
+export const updateLeaveStatusApi = async (leaveId, payload) => {
+  try {
+    const response = await axiosInstance.patch(
+      `/admin/leaves/${leaveId}/status`,
+      payload
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response?.data || { message: err.message };
+  }
+};

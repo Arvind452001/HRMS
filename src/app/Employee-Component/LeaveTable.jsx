@@ -53,11 +53,11 @@ const LeaveTable = () => {
    <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden border border-white/40">
 
     {/* HEADER */}
-    <div className="p-5 flex justify-between items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+    {/* <div className="p-5 flex justify-between items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
       <h2 className="text-xl font-semibold">
         📄 My Leave History
       </h2>
-    </div>
+    </div> */}
 
     {loading ? (
       <div className="p-6 text-center text-gray-500">

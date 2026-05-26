@@ -41,6 +41,7 @@ import EmpLeaveManagement from "../pages/employee-pages/EmpLeaveManagement";
 import PayrollSalary from "../pages/employee-pages/PayrollSalary";
 import EmployeeSalaryTable from "../pages/hr-pages/Salary/EmployeeSalaryTable";
 import PrivacyPolicy from "../pages/employee-pages/PrivacyPolicy";
+import SupportAdmin from "../pages/hr-pages/SupportAdmin";
 
 export default function AppRoutes() {
   return (
@@ -84,7 +85,7 @@ export default function AppRoutes() {
           <Route path="leave" element={<LeaveManagement />} />
           <Route path="company-policy" element={<CompanyPolicy />} />
           <Route path="setting" element={<Settings />} />
-          <Route path="supportt" element={<Support />} />
+          <Route path="support-history" element={<SupportAdmin />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Route>

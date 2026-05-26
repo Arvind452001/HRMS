@@ -51,7 +51,7 @@ export default function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
                   `flex items-center gap-3 rounded-lg text-sm font-normal transition-all
                   ${
                     isActive
-                      ? "bg-gradient-to-r from-primary to-secondary text-primary-content shadow-md"
+                      ? "bg-linear-to-r from-primary to-secondary text-primary-content shadow-md"
                       : "hover:bg-base-200"
                   }`
                 }
@@ -66,20 +66,20 @@ export default function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
 
       {/* Bottom Actions */}
       <div className="space-y-2 px-2">
-        <NavLink
+        {/* <NavLink
           to={`/${role}/support`}
           className={({ isActive }) =>
             `flex items-center gap-3 rounded-lg text-sm font-medium px-3 py-2 transition-all
             ${
               isActive
-                ? "bg-gradient-to-r from-primary to-secondary text-primary-content shadow-md"
+                ? "bg-linear-to-r from-primary to-secondary text-primary-content shadow-md"
                 : "bg-base-200 hover:bg-base-300"
             }`
           }
         >
           <Headphones size={18} />
           Contact Support
-        </NavLink>
+        </NavLink> */}
 
         <button
           onClick={handleLogout}

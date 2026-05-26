@@ -5,7 +5,7 @@ import LeaveTable from '../../HR-component/leaveComponent/LeaveTable'
 const LeaveManagement = () => {
   return (
     <div className="p-6 flex flex-col items-center gap-6">
-      <LeaveCalendar />
+      {/* <LeaveCalendar /> */}
       <LeaveTable />
     </div>
   )

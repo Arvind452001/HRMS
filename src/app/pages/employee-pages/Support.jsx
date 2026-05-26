@@ -9,6 +9,7 @@ import {
   User,
   MessageSquare,
 } from "lucide-react";
+import { createSupportApi } from "../../../api/suportApi";
 
 export default function Support() {
   const [loading, setLoading] = useState(false);
@@ -27,65 +28,49 @@ export default function Support() {
     });
   };
 
-  // API CALL
-  const sendSupportRequest = async (data) => {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
-console.log("response",response)
-    return response.json();
-  };
+// API CALL
+const sendSupportRequest = async () => {
+  return await createSupportApi(form);
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (
-      !form.name ||
-      !form.email ||
-      !form.category ||
-     !form.message
-    ) {
-      return Swal.fire({
-        icon: "error",
-        title: "Missing Fields",
-        text: "Please fill all fields",
-      });
-    }
+  if (!form.name || !form.email || !form.category || !form.message) {
+    return Swal.fire({
+      icon: "error",
+      title: "Missing Fields",
+      text: "Please fill all fields",
+    });
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      await sendSupportRequest(form);
+    await sendSupportRequest(); // ✅ FIXED
 
-      Swal.fire({
-        icon: "success",
-        title: "Submitted",
-        text: "Support request submitted successfully",
-      });
+    Swal.fire({
+      icon: "success",
+      title: "Submitted",
+      text: "Support request submitted successfully",
+    });
 
-      setForm({
-        name: "",
-        email: "",
-        category: "",
-       message: "",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Something went wrong",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    setForm({
+      name: "",
+      email: "",
+      category: "",
+      message: "",
+    });
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: error?.message || "Something went wrong",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <section className=" bg-gradient-to-br from-indigo-100 via-white to-purple-100 flex items-center justify-center px-2 py-4 overflow-hidden">

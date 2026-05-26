@@ -21,10 +21,11 @@ export const menu = {
     { name: "Job Post", icon: Briefcase, path: "job-post" },
     { name: "Applications", icon: Target, path: "Applications" },
     { name: "Salary", icon: Banknote, path: "salary" },
-    { name: "Attendance Management", icon: CalendarCheck, path: "attendance" },
-    { name: "Performance Management", icon: BarChart2, path: "performance" },
+    // { name: "Attendance Management", icon: CalendarCheck, path: "attendance" },
+    // { name: "Performance Management", icon: BarChart2, path: "performance" },
     { name: "Leave Management", icon: Calendar, path: "leave" },
     { name: "Company Policy", icon: ShieldCheck, path: "company-policy" },
+    { name: "Support", icon: Settings, path: "support-history" },
     { name: "Setting", icon: Settings, path: "settings" },
   ],
 
@@ -35,6 +36,7 @@ export const menu = {
     { name: "Leave Management", icon: Calendar, path: "leaveManagement" },
     { name: "Payroll & Salary", icon: Wallet, path: "payroll-salary" }, // avoid & in URL
     { name: "Company Policies", icon: Briefcase, path: "privacy-Policy" },
+    { name: "Support", icon: Settings, path: "support" },
   ],
 };
 

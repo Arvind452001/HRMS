@@ -85,11 +85,12 @@ const Login = () => {
     }
   };
 
-  return (
+  return ( 
     <div
       className="min-h-screen bg-cover bg-center flex items-center justify-center px-4 relative"
       style={{
-        backgroundImage: "url('/src/assets/bg-2.png')",
+        // backgroundImage: "url('/src/assets/bg-2.png')",
+         backgroundImage: "url('https://technorizen.com/public/html/web/images/team2.jpg')",
       }}
     >
       {/* Overlay */}
