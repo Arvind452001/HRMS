@@ -73,13 +73,13 @@ const handleSubmit = async (e) => {
 };
 
   return (
-    <section className=" bg-gradient-to-br from-indigo-100 via-white to-purple-100 flex items-center justify-center px-2 py-4 overflow-hidden">
+    <section className=" bg-linear-to-br from-indigo-100 via-white to-purple-100 flex items-center justify-center px-2 py-4 overflow-hidden">
       
       {/* MAIN CONTAINER */}
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
 
         {/* LEFT SIDE */}
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-4 md:p-5 flex flex-col justify-between">
+        <div className="bg-linear-to-br from-indigo-600 to-purple-700 text-white p-4 md:p-5 flex flex-col justify-between">
           
           <div>
             {/* HEADER */}
@@ -280,7 +280,7 @@ const handleSubmit = async (e) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition duration-200 disabled:opacity-70"
+              className="w-full bg-linear-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition duration-200 disabled:opacity-70"
             >
               {loading ? (
                 "Submitting..."

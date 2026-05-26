@@ -27,17 +27,17 @@ export default function SupportAdmin() {
     fetchData();
   }, []);
 
-  // Category badge with gradient + shadow
+  // Category badge with linear + shadow
   const getCategoryStyle = (cat) => {
     switch (cat) {
       case "Payroll":
-        return "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-sm";
+        return "bg-linear-to-r from-blue-500 to-blue-600 text-white shadow-sm";
       case "Leave":
-        return "bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-sm";
+        return "bg-linear-to-r from-emerald-500 to-green-600 text-white shadow-sm";
       case "General":
-        return "bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-sm";
+        return "bg-linear-to-r from-purple-500 to-indigo-600 text-white shadow-sm";
       default:
-        return "bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-sm";
+        return "bg-linear-to-r from-gray-500 to-gray-600 text-white shadow-sm";
     }
   };
 
@@ -69,13 +69,13 @@ export default function SupportAdmin() {
   }, [search, category, perPage]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/40 p-6 md:p-2">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-indigo-50/30 to-purple-50/40 p-6 md:p-2">
       {/* Main Container */}
       <div className="max-w-7xl mx-auto">
         
-        {/* Header Section with Gradient Text */}
+        {/* Header Section with linear Text */}
         <div className="mb-8 text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-sm">
+          <h1 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-sm">
             HR Support Panel
           </h1>
           <p className="text-gray-500 mt-1 text-sm">Manage and track employee support requests</p>
@@ -88,7 +88,7 @@ export default function SupportAdmin() {
               <p className="text-gray-500 text-sm">Total Tickets</p>
               <p className="text-2xl font-bold text-gray-800">{totalRequests}</p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center shadow-md">
+            <div className="h-10 w-10 rounded-full bg-linear-to-br from-indigo-400 to-indigo-600 flex items-center justify-center shadow-md">
               <span className="text-white text-lg">📋</span>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function SupportAdmin() {
               <p className="text-gray-500 text-sm">Payroll</p>
               <p className="text-2xl font-bold text-gray-800">{payrollCount}</p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-md">
+            <div className="h-10 w-10 rounded-full bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-md">
               <span className="text-white text-lg">💰</span>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function SupportAdmin() {
               <p className="text-gray-500 text-sm">Leave</p>
               <p className="text-2xl font-bold text-gray-800">{leaveCount}</p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-md">
+            <div className="h-10 w-10 rounded-full bg-linear-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-md">
               <span className="text-white text-lg">🌴</span>
             </div>
           </div>
@@ -115,13 +115,13 @@ export default function SupportAdmin() {
               <p className="text-gray-500 text-sm">General</p>
               <p className="text-2xl font-bold text-gray-800">{generalCount}</p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-md">
+            <div className="h-10 w-10 rounded-full bg-linear-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-md">
               <span className="text-white text-lg">💬</span>
             </div>
           </div>
         </div>
 
-        {/* Filter Section with Gradient Border & Shadow
+        {/* Filter Section with linear Border & Shadow
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-5 mb-8 border border-white/50 transition-all">
           <div className="flex flex-wrap gap-4 items-end">
             <div className="flex-1 min-w-[180px]">
@@ -178,8 +178,8 @@ export default function SupportAdmin() {
         {/* Tickets Table Card */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/50">
           <div className="overflow-x-auto">
-            {/* Table Header - Gradient Background */}
-            <div className="grid grid-cols-5 gap-4 bg-gradient-to-r from-primary to-secondary text-primary-content shadow-md p-4 text-sm font-semibold text-gray-700 border-b border-gray-200/50 min-w-[720px]">
+            {/* Table Header - linear Background */}
+            <div className="grid grid-cols-5 gap-4 bg-linear-to-r from-primary to-secondary text-primary-content shadow-md p-4 text-sm font-semibold border-b border-gray-200/50 min-w-180">
               <div className="flex items-center">Name</div>
               <div className="flex items-center">Email</div>
               <div className="flex items-center">Category</div>
@@ -201,7 +201,7 @@ export default function SupportAdmin() {
               currentData.map((item, idx) => (
                 <div
                   key={item._id || idx}
-                  className="grid grid-cols-5 gap-4 p-4 border-b border-gray-100 hover:bg-gradient-to-r hover:from-indigo-50/30 hover:to-purple-50/30 transition-all duration-200 min-w-[720px] group"
+                  className="grid grid-cols-5 gap-4 p-4 border-b border-gray-100 hover:bg-linear-to-r hover:from-indigo-50/30 hover:to-purple-50/30 transition-all duration-200 min-w-180 group"
                 >
              
                   <div className="font-semibold text-gray-800">{item.name}</div>
@@ -226,7 +226,7 @@ export default function SupportAdmin() {
           </div>
         </div>
 
-        {/* Pagination with Gradient Buttons & Shadow */}
+        {/* Pagination with linear Buttons & Shadow */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
           <p className="text-sm text-gray-600 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
             Showing {filteredData.length === 0 ? 0 : indexOfFirst + 1} to{" "}
@@ -240,7 +240,7 @@ export default function SupportAdmin() {
               className={`px-5 py-2 rounded-xl font-medium transition-all duration-200 shadow-md ${
                 currentPage === 1
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed shadow-none"
-                  : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                  : "bg-linear-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5"
               }`}
             >
               ← Prev
@@ -256,7 +256,7 @@ export default function SupportAdmin() {
               className={`px-5 py-2 rounded-xl font-medium transition-all duration-200 shadow-md ${
                 currentPage === totalPages || totalPages === 0
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed shadow-none"
-                  : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                  : "bg-linear-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5"
               }`}
             >
               Next →

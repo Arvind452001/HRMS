@@ -110,7 +110,7 @@ const Login = () => {
         <h1 className="text-2xl text-gray-200 font-semibold mb-6">HRMS</h1>
 
         <div className="mb-6">
-          <div className="w-full py-2 rounded-md bg-gradient-to-r from-blue-500 to-blue-800 text-center">
+          <div className="w-full py-2 rounded-md bg-linear-to-r from-blue-500 to-blue-800 text-center">
             Log In Page
           </div>
         </div>

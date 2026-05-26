@@ -117,7 +117,7 @@ export default function Employees() {
 
       ) : (
 
-        <table className="table table-zebra min-w-[1100px] border-separate border-spacing-0">
+        <table className="table table-zebra min-w-275 border-separate border-spacing-0">
 
           {/* ================= TABLE HEAD ================= */}
 

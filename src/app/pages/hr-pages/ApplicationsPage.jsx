@@ -101,14 +101,14 @@ export default function ApplicationsPage() {
   }
 
   return (
-    <div className="p-4 space-y-4 bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 min-h-screen">
+    <div className="p-4 space-y-4 bg-linear-to-br from-slate-50 via-purple-50 to-pink-50 min-h-screen">
       {/* HEADER */}
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-white/80 backdrop-blur-xl border border-purple-100 rounded-2xl p-4 shadow-sm">
         {/* LEFT */}
 
         <div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
             Job Applications
           </h1>
 
@@ -166,7 +166,7 @@ export default function ApplicationsPage() {
         <table className="table table-zebra">
           {/* TABLE HEAD */}
 
-          <thead className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 shadow-lg">
+          <thead className="bg-linear-to-r from-indigo-600 via-violet-600 to-fuchsia-600 shadow-lg">
             <tr className="text-md uppercase tracking-wider text-white">
               <th className="py-3">Candidate</th>
 
@@ -200,7 +200,7 @@ export default function ApplicationsPage() {
                   <div className="flex items-center gap-3">
                     {/* AVATAR */}
 
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold shadow-md">
+                    <div className="w-10 h-10 rounded-xl bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold shadow-md">
                       {app?.fullName?.charAt(0)?.toUpperCase()}
                     </div>
 
@@ -241,7 +241,7 @@ export default function ApplicationsPage() {
                     {app.skills?.slice(0, 3).map((skill, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 rounded-lg text-[10px] font-medium bg-gradient-to-r from-indigo-100 to-pink-100 text-purple-700 border border-purple-100"
+                        className="px-2 py-1 rounded-lg text-[10px] font-medium bg-linear-to-r from-indigo-100 to-pink-100 text-purple-700 border border-purple-100"
                       >
                         {skill}
                       </span>
@@ -273,7 +273,7 @@ export default function ApplicationsPage() {
                   <div className="flex items-center justify-center gap-2">
                     {/* VIEW */}
 
-                    <button className="w-8 h-8 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white flex items-center justify-center shadow-md hover:scale-105 transition-all duration-200">
+                    <button className="w-8 h-8 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white flex items-center justify-center shadow-md hover:scale-105 transition-all duration-200">
                       <FaEye />
                     </button>
 
@@ -282,7 +282,7 @@ export default function ApplicationsPage() {
                     <div className="dropdown dropdown-end">
                       <label
                         tabIndex={0}
-                        className="w-8 h-8 rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white flex items-center justify-center shadow-md hover:scale-105 transition-all duration-200 cursor-pointer"
+                        className="w-8 h-8 rounded-lg bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white flex items-center justify-center shadow-md hover:scale-105 transition-all duration-200 cursor-pointer"
                       >
                         <MdModeEdit />
                       </label>
@@ -372,7 +372,7 @@ export default function ApplicationsPage() {
               key={i}
               className={`join-item btn btn-sm ${
                 currentPage === i + 1
-                  ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white border-0"
+                  ? "bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white border-0"
                   : ""
               }`}
               onClick={() => setCurrentPage(i + 1)}

@@ -91,7 +91,7 @@ export default function EmployeeSalaryTable() {
 
   {/* LEFT */}
   <div>
-    <h2 className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+    <h2 className="text-xl font-bold bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
       Employee Salary
     </h2>
 
@@ -131,7 +131,7 @@ export default function EmployeeSalaryTable() {
 
     {/* BUTTON */}
     <button
-      className="btn btn-sm border-0 text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:scale-[1.02] transition-all duration-200 shadow-sm whitespace-nowrap"
+      className="btn btn-sm border-0 text-white bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 hover:scale-[1.02] transition-all duration-200 shadow-sm whitespace-nowrap"
       onClick={() =>
         navigate("/hr/salary/add")
       }
@@ -146,10 +146,10 @@ export default function EmployeeSalaryTable() {
       <div className="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-sm">
         {/* TABLE */}
         <div className="overflow-x-auto custom-scrollbar">
-          <table className="w-full min-w-[1000px] border-separate border-spacing-0">
+          <table className="w-full min-w-250 border-separate border-spacing-0">
             {/* TABLE HEAD */}
             <thead>
-              <tr className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white">
+              <tr className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white">
                 <th className="px-6 py-5 text-left text-xs font-semibold uppercase tracking-wider first:rounded-tl-2xl">
                   SN
                 </th>
@@ -202,7 +202,7 @@ export default function EmployeeSalaryTable() {
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-4">
                         {/* AVATAR */}
-                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold shadow-md">
+                        <div className="w-11 h-11 rounded-2xl bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold shadow-md">
                           {salary?.employee?.personal?.fullName
                             ?.charAt(0)
                             ?.toUpperCase()}
@@ -243,7 +243,7 @@ export default function EmployeeSalaryTable() {
 
                     {/* NET */}
                     <td className="px-6 py-5">
-                      <span className="px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-sm font-bold shadow-sm">
+                      <span className="px-4 py-2 rounded-full bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-sm font-bold shadow-sm">
                         ₹{salary.net?.toLocaleString()}
                       </span>
                     </td>
@@ -283,7 +283,7 @@ export default function EmployeeSalaryTable() {
                 key={i}
                 className={`h-10 min-w-10 rounded-xl text-sm font-medium transition-all ${
                   currentPage === i + 1
-                    ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-md"
+                    ? "bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-md"
                     : "border border-purple-200 bg-white text-gray-700"
                 }`}
                 onClick={() => setCurrentPage(i + 1)}

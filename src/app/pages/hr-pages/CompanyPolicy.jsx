@@ -59,7 +59,7 @@ const CompanyPolicy = () => {
 
         {/* LEFT */}
         <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
             Company Policies
           </h1>
 
@@ -71,7 +71,7 @@ const CompanyPolicy = () => {
         {/* RIGHT */}
         <button
           onClick={() => setOpen(true)}
-          className="btn btn-sm border-0 text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:scale-[1.02] transition-all duration-200 shadow-sm whitespace-nowrap"
+          className="btn btn-sm border-0 text-white bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 hover:scale-[1.02] transition-all duration-200 shadow-sm whitespace-nowrap"
         >
           + Add Policy
         </button>
@@ -168,7 +168,7 @@ const CompanyPolicy = () => {
             >
 
               {/* PDF ICON */}
-              <div className="w-20 h-24 mx-auto rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center shadow-md">
+              <div className="w-20 h-24 mx-auto rounded-2xl bg-linear-to-br from-red-500 to-pink-600 flex items-center justify-center shadow-md">
 
                 <span className="text-white font-bold text-lg">
                   PDF

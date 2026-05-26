@@ -127,7 +127,7 @@ const LeaveTable = () => {
 
   {/* LEFT */}
   <div>
-    <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+    <h1 className="text-xl font-bold bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
       Leave Management
     </h1>
 
@@ -203,7 +203,7 @@ const LeaveTable = () => {
       
       {/* TABLE HEAD */}
       <thead>
-        <tr className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white uppercase text-[11px] tracking-wider">
+        <tr className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white uppercase text-[11px] tracking-wider">
           
           <th className="px-4 py-4 font-semibold text-left first:rounded-tl-2xl">
             Employee
@@ -264,7 +264,7 @@ const LeaveTable = () => {
               <td className="px-4 py-4 border-b border-purple-50">
                 <div className="flex items-center gap-3">
                   
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                  <div className="w-10 h-10 rounded-xl bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
                     {leave?.employeeId?.personal?.fullName
                       ?.charAt(0)
                       ?.toUpperCase()}
@@ -284,7 +284,7 @@ const LeaveTable = () => {
 
               {/* LEAVE TYPE */}
               <td className="px-4 py-4 border-b border-purple-50">
-                <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-gradient-to-r from-indigo-100 to-pink-100 text-purple-700 border border-purple-100">
+                <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-linear-to-r from-indigo-100 to-pink-100 text-purple-700 border border-purple-100">
                   {leave?.leaveType}
                 </span>
               </td>

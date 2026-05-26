@@ -6,7 +6,7 @@ const EmpLeaveManagement = () => {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-6">
+    <div className="min-h-screen bg-linear-to-br from-indigo-100 via-purple-100 to-pink-100 p-6">
 
       {/* CONTAINER */}
       <div className="max-w-6xl mx-auto bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/40">
@@ -35,7 +35,7 @@ const EmpLeaveManagement = () => {
           {!showForm && (
             <button
               onClick={() => setShowForm(true)}
-              className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg shadow hover:opacity-90"
+              className="px-4 py-2 bg-linear-to-r from-indigo-500 to-purple-500 text-white rounded-lg shadow hover:opacity-90"
             >
               ➕ Apply Leave
             </button>
