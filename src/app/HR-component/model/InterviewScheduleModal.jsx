@@ -63,13 +63,9 @@ const handleSchedule = async () => {
     // console.log(payload);
 
     /* ===== API CALL ===== */
-    const response = await scheduleInterviewApi(payload);
-
-    // axios response
-    const data = response.data;
-
-    console.log(data);
-
+    const data = await scheduleInterviewApi(payload);
+console.log("---------", data.message);
+  
     /* ===== SUCCESS ===== */
     await Swal.fire({
       icon: "success",

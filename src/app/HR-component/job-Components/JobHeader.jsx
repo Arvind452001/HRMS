@@ -30,15 +30,17 @@ export default function JobHeader({
       {/* Right: Actions */}
       <div className="flex items-center gap-2">
         {/* Filter */}
-        <select
+        {/* <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="border px-3 py-1 rounded text-sm"
         >
-          <option value="open">Open</option>
-          <option value="closed">Closed</option>
-          <option value="draft">Draft</option>
-        </select>
+          <option value="All">All</option>
+          <option value="Draft">Draft</option>
+          <option value="Published">Published</option>
+          <option value="Closed">Closed</option>
+          <option value="Archived">Archived</option>
+        </select> */}
 
         {/* Create Button */}
         <button

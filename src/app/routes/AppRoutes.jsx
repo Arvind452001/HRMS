@@ -42,6 +42,7 @@ import PayrollSalary from "../pages/employee-pages/PayrollSalary";
 import EmployeeSalaryTable from "../pages/hr-pages/Salary/EmployeeSalaryTable";
 import PrivacyPolicy from "../pages/employee-pages/PrivacyPolicy";
 import SupportAdmin from "../pages/hr-pages/SupportAdmin";
+import MyInterviews from "../pages/hr-pages/MyInterviews";
 
 export default function AppRoutes() {
   return (
@@ -60,7 +61,7 @@ export default function AppRoutes() {
       </Route>
 
       {/* ===== HR PROTECTED ROUTES ===== */}
-      <Route element={<ProtectedRoute allowed={["hr"]} />}>
+      <Route element={<ProtectedRoute allowed={["hr"]} />}>  
         <Route path="/hr" element={<HRLayout />}>
           <Route index element={<HrDashboard />} />
           <Route path="dashboard" element={<HrDashboard />} />
@@ -100,6 +101,7 @@ export default function AppRoutes() {
           <Route path="payroll-salary" element={<PayrollSalary />} />
           <Route path="myProfile" element={<MyProfile />} />
           <Route path="privacy-Policy" element={<PrivacyPolicy />} />
+           <Route path="my-interviews" element={<MyInterviews />} />
           <Route path="support" element={<Support />} />
           {/* use hyphen instead of space */}
         </Route>

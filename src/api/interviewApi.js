@@ -5,10 +5,18 @@ export const scheduleInterviewApi = async (data) => {
   return response.data;
 };
 
-
 export const getCandidateInterviewsApi = async (id) => {
-    // console.log("dataaaaa",id)
   const response = await axiosInstance.get(`/Interview/candidate/${id}`);
-   console.log("dataaaaa",response)
+  console.log("dataaaaa", response);
+  return response.data;
+};
+
+export const getEmployeeInterviewsApi = async (id) => {
+  const response = await axiosInstance.get(`/Interview/interviewer/${id}`);
+  return response.data;
+};
+
+export const submitInterviewReviewApi = async (id, data) => {
+  const response = await axiosInstance.put(`/Interview/${id}/review`, data);
   return response.data;
 };

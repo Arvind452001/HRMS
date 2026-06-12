@@ -27,7 +27,7 @@ const Jobs = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   // Status filter
-  const [filter, setFilter] = useState("open");
+  const [filter, setFilter] = useState("All");
 
   // Fetch jobs
   const fetchJobs = async () => {

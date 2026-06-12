@@ -102,7 +102,7 @@ export default function AdminVisitorsPage() {
     startIndex,
     startIndex + rowsPerPage,
   );
-
+console.log("selectedVisitor:", selectedVisitor);
   return (
    <div className="min-h-screen p-2 md:p-5 bg-linear-to-br from-slate-50 via-purple-50 to-pink-50">
 
@@ -364,7 +364,13 @@ export default function AdminVisitorsPage() {
       </table>
 
     </div>
-
+{selectedVisitor && (
+ <InterviewScheduleModal
+  selectedVisitor={selectedVisitor}
+  employees={employees}
+  onClose={() => setSelectedVisitor(null)}
+/>
+)}
     {/* PAGINATION */}
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-5 py-3 border-t border-purple-100 bg-white">
 

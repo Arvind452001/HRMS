@@ -15,7 +15,7 @@ export const createJobApi = async (data) => {
 export const getAllJobApi = async ({
   page = 1,
   limit = 10,
-  status = "Archived",
+  status = "Published",
 }) => {
   try {
     const response = await axiosInstance.get(

@@ -104,3 +104,23 @@ export const getEmployeeAttendanceApi = async (employeeId) => {
     );
   }
 };
+
+
+
+export const getAttendanceSummaryApi = async (employeeId, month, year) => {
+  try {
+    console.log("Summary response--- 👉", employeeId, month, year);
+    const response = await axiosInstance.get(
+      `/employees/attendance/summary?employeeId=${employeeId}&month=${month}&year=${year}`
+    );
+    console.log("Summary response", response.data);
+    return response.data;
+  } catch (err) {
+    throw (
+      err.response?.data || {
+        success: false,
+        message: err.message,
+      }
+    );
+  }
+};

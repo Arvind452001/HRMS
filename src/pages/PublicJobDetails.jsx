@@ -15,7 +15,7 @@ const PublicJobDetails = () => {
       try {
         setLoading(true);
         const res = await getJobBySlug(slug);
-
+console.log("API Response:", res); // Debugging log 
         if (res.success && res.data) {
           setJob(res.data);
         } else {

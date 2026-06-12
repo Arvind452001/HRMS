@@ -10,6 +10,7 @@ import {
   Users,
   BarChart2,
   ShieldCheck,
+  BriefcaseBusiness,
   Settings,
 } from "lucide-react";
 
@@ -33,6 +34,7 @@ export const menu = {
     { name: "Dashboard", icon: LayoutGrid, path: "" }, // index route
     { name: "My Profile", icon: User, path: "myProfile" },
     { name: "Attendance", icon: CalendarCheck, path: "attendance" },
+    { name: "My Interviews", icon: BriefcaseBusiness, path: "my-interviews" },
     { name: "Leave Management", icon: Calendar, path: "leaveManagement" },
     { name: "Payroll & Salary", icon: Wallet, path: "payroll-salary" }, // avoid & in URL
     { name: "Company Policies", icon: Briefcase, path: "privacy-Policy" },

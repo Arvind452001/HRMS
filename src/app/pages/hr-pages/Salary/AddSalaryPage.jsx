@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getAllEmployeesApi } from "../../../../api/employee-Api";
 import { toast } from "react-toastify";
-import { createSalaryHR } from "../../../../api/Salary.Api";
+import { createSalaryHR, getSalaryByIdHR, updateSalaryHR } from "../../../../api/Salary.Api";
 
 export default function AddSalaryPage() {
   const navigate = useNavigate();
@@ -68,7 +68,8 @@ export default function AddSalaryPage() {
     console.log("running");
     try {
       setPageLoading(true);
-      const res = await getSalaryByIdApi(id);
+      const res = await getSalaryByIdHR(id);
+      console.log("getSalaryByIdHR", res);
       const data = res.data.data;
       console.log("sallay-Details", res.data.data);
       setForm({
@@ -91,7 +92,7 @@ export default function AddSalaryPage() {
       });
     } catch (error) {
       toast.error("Failed to load salary data");
-      navigate("/salary-list");
+      // navigate("/salary-list");
     } finally {
       setPageLoading(false);
     }

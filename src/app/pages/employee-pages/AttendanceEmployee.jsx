@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllAttendanceApi } from "../../../api/attendanceApi";
+import AttendanceSummary from "../../../components/AttendanceSummary";
 
 export default function AttendanceEmployee() {
   const today = new Date();
@@ -155,7 +156,13 @@ export default function AttendanceEmployee() {
             </table>
           </div>
         )}
+        
       </div>
+      <AttendanceSummary
+  employeeId={'69d653687e7d655dcce1892c'}
+  month={month}
+  year={year}
+/>
     </div>
   );
 }
