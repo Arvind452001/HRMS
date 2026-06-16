@@ -23,7 +23,7 @@ export const menu = {
     { name: "Applications", icon: Target, path: "Applications" },
     { name: "Salary", icon: Banknote, path: "salary" },
     // { name: "Attendance Management", icon: CalendarCheck, path: "attendance" },
-    // { name: "Performance Management", icon: BarChart2, path: "performance" },
+    { name: "Salary Structures", icon: BarChart2, path: "salary-structure" },
     { name: "Leave Management", icon: Calendar, path: "leave" },
     { name: "Company Policy", icon: ShieldCheck, path: "company-policy" },
     { name: "Support", icon: Settings, path: "support-history" },
