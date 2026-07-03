@@ -119,7 +119,7 @@ const CompanyPolicy = () => {
               </p>
 
               <p className="text-gray-500 mt-1">
-                Monday - Saturday : 9:30 AM to 7:30 PM
+                Monday - Saturday : 10:00 AM to 7:30 PM
               </p>
             </div>
 
@@ -161,7 +161,7 @@ const CompanyPolicy = () => {
           {policies.map((policy) => (
             <a
               key={policy._id}
-              href={`http://localhost:5000/${policy.filePath}`}
+              href={`http://localhost:5000${policy.filePath}`}
               target="_blank"
               rel="noreferrer"
               className="group bg-[#f8f7fc] border border-purple-100 rounded-2xl p-4 hover:shadow-md transition-all duration-200 hover:-translate-y-1"

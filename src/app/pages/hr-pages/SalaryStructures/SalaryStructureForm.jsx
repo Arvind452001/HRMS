@@ -162,7 +162,7 @@ export default function SalaryStructureForm({
           </div>
 
           {/* PF */}
-          <div>
+          {/* <div>
             <label className="label">
               <span className="label-text font-medium">PF</span>
             </label>
@@ -175,10 +175,10 @@ export default function SalaryStructureForm({
               placeholder="Enter PF"
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
 
           {/* ESI */}
-          <div>
+          {/* <div>
             <label className="label">
               <span className="label-text font-medium">ESI</span>
             </label>
@@ -191,7 +191,7 @@ export default function SalaryStructureForm({
               placeholder="Enter ESI"
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
 
           {/* Professional Tax */}
           <div>

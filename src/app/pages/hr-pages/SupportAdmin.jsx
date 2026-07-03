@@ -182,7 +182,7 @@ export default function SupportAdmin() {
             <div className="grid grid-cols-5 gap-4 bg-linear-to-r from-primary to-secondary text-primary-content shadow-md p-4 text-sm font-semibold border-b border-gray-200/50 min-w-180">
               <div className="flex items-center">Name</div>
               <div className="flex items-center">Email</div>
-              <div className="flex items-center">Category</div>
+              {/* <div className="flex items-center">Category</div> */}
               <div className="flex items-center">Message</div>
             </div>
 
@@ -206,11 +206,11 @@ export default function SupportAdmin() {
              
                   <div className="font-semibold text-gray-800">{item.name}</div>
                   <div className="text-gray-500 text-sm truncate">{item.email}</div>
-                  <div>
+                  {/* <div>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium inline-block shadow-sm ${getCategoryStyle(item.category)}`}>
                       {item.category}
                     </span>
-                  </div>
+                  </div> */}
                   <div className="text-gray-600 text-sm truncate max-w-xs group-hover:text-gray-900">
                     {item.message}
                   </div>

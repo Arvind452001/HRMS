@@ -16,6 +16,7 @@ export default function AttendanceLog() {
     try {
       setLoading(true);
       const res = await getTodayAttendanceApi();
+    
       console.log("res:", res);
       setEmployees(res || []);
       setFilteredEmployees(res.data || []);

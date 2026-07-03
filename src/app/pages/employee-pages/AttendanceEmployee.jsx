@@ -17,6 +17,12 @@ export default function AttendanceEmployee() {
 
       const res = await getAllAttendanceApi(year, month);
       setData(res.data || []);
+      // Auto checkout ho gaya ho to localStorage clear kar do
+      const lastAttendance = res?.data?.at(-1);
+      // console.log("Last Attendance:", lastAttendance);
+      if (lastAttendance?.checkOut) {
+        localStorage.removeItem("checkInTime");
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -156,13 +162,12 @@ export default function AttendanceEmployee() {
             </table>
           </div>
         )}
-        
       </div>
       <AttendanceSummary
-  employeeId={'69d653687e7d655dcce1892c'}
-  month={month}
-  year={year}
-/>
+        employeeId={"69d653687e7d655dcce1892c"}
+        month={month}
+        year={year}
+      />
     </div>
   );
 }

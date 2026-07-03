@@ -87,8 +87,9 @@ export default function AppRoutes() {
           <Route path="performancee" element={<Performance />} />
           <Route path="leave" element={<LeaveManagement />} />
           <Route path="company-policy" element={<CompanyPolicy />} />
-          <Route path="setting" element={<Settings />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="support-history" element={<SupportAdmin />} />
+          {/* <Route path="Lovable" element={<SupportAdmin />} /> */}
           <Route path="*" element={<NotFound />} />
         </Route>
       </Route>

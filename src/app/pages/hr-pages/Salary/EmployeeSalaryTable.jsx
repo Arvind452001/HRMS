@@ -101,12 +101,12 @@ export default function EmployeeSalaryTable() {
           </select>
 
           {/* ADD BUTTON */}
-          <button
+          {/* <button
             className="btn btn-sm border-0 text-white bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 hover:scale-[1.02] transition-all duration-200 shadow-sm whitespace-nowrap"
             onClick={() => navigate("/hr/salary/add")}
           >
             + Add Salary
-          </button>
+          </button> */}
         </div>
       </div>
 

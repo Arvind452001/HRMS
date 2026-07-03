@@ -35,6 +35,7 @@ export default function SalaryStructureTable() {
 
 
 const handleDelete = async (id, employeeName) => {
+  window.print();
   const result = await Swal.fire({
     title: "Delete Salary Structure?",
     text: `Are you sure you want to delete the salary structure for ${employeeName}?`,
@@ -49,7 +50,7 @@ const handleDelete = async (id, employeeName) => {
   if (!result.isConfirmed) return;
 
   try {
-    await deleteSalaryStructureHR(id);
+    // await deleteSalaryStructureHR(id);
 
     await Swal.fire({
       title: "Deleted!",
@@ -160,7 +161,7 @@ const handleDelete = async (id, employeeName) => {
 </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-3xl border border-purple-100 bg-white shadow-sm">
+      <div id="salary-slip" className="overflow-hidden rounded-3xl border border-purple-100 bg-white shadow-sm">
         <div className="overflow-x-auto">
           <table className="table">
             <thead>
@@ -168,9 +169,9 @@ const handleDelete = async (id, employeeName) => {
                 <th className="px-4 py-4">S.N.</th>
                 <th className="px-4 py-4">Employee</th>
                 <th className="px-4 py-4">Basic</th>
-                <th className="px-4 py-4">Gross</th>
-                <th className="px-4 py-4">Deduction</th>
-                <th className="px-4 py-4">Net Salary</th>
+                {/* <th className="px-4 py-4">Gross</th> */}
+                {/* <th className="px-4 py-4">Deduction</th> */}
+                {/* <th className="px-4 py-4">Net Salary</th> */}
                 <th className="px-4 py-4">Effective Date</th>
                 <th className="px-4 py-4">Actions</th>
                </tr>
@@ -210,21 +211,21 @@ const handleDelete = async (id, employeeName) => {
                           ₹{salary.basicSalary?.toLocaleString() || 0}
                         </span>
                       </td>
-                      <td>
+                      {/* <td>
                         <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
                           ₹{salary.grossSalary?.toLocaleString() || 0}
                         </span>
-                      </td>
-                      <td>
+                      </td> */}
+                      {/* <td>
                         <span className="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-semibold">
                           ₹{salary.totalDeduction?.toLocaleString() || 0}
                         </span>
-                      </td>
-                      <td>
+                      </td> */}
+                      {/* <td>
                         <span className="px-3 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white text-sm font-semibold shadow-sm">
                           ₹{salary.netSalary?.toLocaleString() || 0}
                         </span>
-                      </td>
+                      </td> */}
                       <td className="text-gray-600">
                         {salary.effectiveFrom
                           ? new Date(salary.effectiveFrom).toLocaleDateString(

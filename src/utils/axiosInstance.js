@@ -66,7 +66,7 @@ axiosInstance.interceptors.response.use(
       Swal.fire({
         icon: "error",
         title: "Network Error",
-        text: "Please check your internet connection",
+        text: "Please check your internet connection/ login again",
       });
     }
 

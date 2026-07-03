@@ -40,7 +40,7 @@ export const getAllAttendanceApi = async (
 ) => {
 
   try {
-console.log('getAllAttendanceApi',year,month)
+// console.log('getAllAttendanceApi',year,month)
     const response =
       await axiosInstance.get(
         `/employees/attendance/my`,
@@ -68,6 +68,9 @@ console.log('getAllAttendanceApi',year,month)
 /* ================= Get All Attendance ================= */
 export const getTodayAttendanceApi = async () => {
   try {
+    if (attendance.checkOut) {
+    localStorage.removeItem("checkInTime");
+}
     const response = await axiosInstance.get(
       `/employees/getEmployeesAttendance`
     );
@@ -109,11 +112,11 @@ export const getEmployeeAttendanceApi = async (employeeId) => {
 
 export const getAttendanceSummaryApi = async (employeeId, month, year) => {
   try {
-    console.log("Summary response--- 👉", employeeId, month, year);
+    // console.log("Summary response--- 👉", employeeId, month, year);
     const response = await axiosInstance.get(
       `/employees/attendance/summary?employeeId=${employeeId}&month=${month}&year=${year}`
     );
-    console.log("Summary response", response.data);
+    // console.log("Summary response", response.data);
     return response.data;
   } catch (err) {
     throw (

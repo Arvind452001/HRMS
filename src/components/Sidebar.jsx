@@ -43,22 +43,32 @@ export default function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
         <ul className="menu p-0 gap-1">
           {menu[role]?.map((item, index) => (
             <li key={index}>
-              <NavLink
-                end
-                to={item.path}
-                //  onClick={handleNavClick}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-lg text-sm font-normal transition-all
-                  ${
-                    isActive
-                      ? "bg-linear-to-r from-primary to-secondary text-primary-content shadow-md"
-                      : "hover:bg-base-200"
-                  }`
-                }
-              >
-                <item.icon size={18} />
-                {item.name}
-              </NavLink>
+              {item.external ? (
+                <a
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-lg text-sm font-normal transition-all hover:bg-base-200"
+                >
+                  <item.icon size={18} />
+                  {item.name}
+                </a>
+              ) : (
+                <NavLink
+                  end
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg text-sm font-normal transition-all ${
+                      isActive
+                        ? "bg-linear-to-r from-primary to-secondary text-primary-content shadow-md"
+                        : "hover:bg-base-200"
+                    }`
+                  }
+                >
+                  <item.icon size={18} />
+                  {item.name}
+                </NavLink>
+              )}
             </li>
           ))}
         </ul>

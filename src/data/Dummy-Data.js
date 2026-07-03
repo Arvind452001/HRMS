@@ -28,6 +28,12 @@ export const menu = {
     { name: "Company Policy", icon: ShieldCheck, path: "company-policy" },
     { name: "Support", icon: Settings, path: "support-history" },
     { name: "Setting", icon: Settings, path: "settings" },
+   {
+  name: "Lovable",
+  icon: Target,
+  path: "https://payment-slip.lovable.app/",
+  external: true,
+}
   ],
 
   employee: [
